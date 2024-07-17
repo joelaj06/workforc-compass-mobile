@@ -9,7 +9,7 @@ class AppLightTheme implements ThemeColor {
   @override
   MaterialColor hint = HintColor.color;
   @override
-  MaterialColor accent = PrimaryColor.marketlineAccent;
+  MaterialColor accent = PrimaryColor.primaryAccent;
   @override
   MaterialColor primary = PrimaryColor.color;
 

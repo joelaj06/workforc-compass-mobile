@@ -5,5 +5,10 @@ class AppRoutes {
  static const String base = '/base';
  static const String home = '/home';
  static const String profile = '/profile';
+ static const String attendance = '/attendance';
+ static const String notification = '/notification';
+ static const String settings = '/settings';
+ static const String more = '/more';
+
 
 }
