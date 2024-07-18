@@ -21,7 +21,7 @@ class WorkCompass extends StatelessWidget {
           theme: AppTheme(AppLightTheme()).data,
           getPages: Pages.pages,
           initialBinding: MainBindings(),
-          initialRoute:  AppRoutes.base
+          initialRoute:  AppRoutes.login
       ),
     );
   }

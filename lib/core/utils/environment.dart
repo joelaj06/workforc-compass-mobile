@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 
-const String baseUrl = '';
+
+const String socketUrlLocal = kIsWeb ? 'http://localhost:3000/':'http://10.0.2.2:3000/';
+const String socketUrlLive = 'https://bookme-vfk0.onrender.com';
+const String baseUrlLocal = kIsWeb ? 'http://localhost:3000/api/':'http://10.0.2.2:3000/api/';
+const String baseUrl = 'https://bookme-vfk0.onrender.com/api/';
 enum Environment { development, production }
 
 bool isTesting = kIsWeb? false:Platform.environment.containsKey('FLUTTER_TEST');
@@ -49,10 +53,10 @@ extension EnvironmentX on Environment {
 
   String get url {
     return <Environment, String>{
-      Environment.development: 'https://demo.marketlinepos.com/api/',
-      Environment.production: 'https://demo.marketlinepos.com/api/',
+      Environment.development: baseUrlLocal,
+      Environment.production: baseUrl,
     }[this]!;
   }
 }
 
-//https://demo.marketlinepos.com/api/
+

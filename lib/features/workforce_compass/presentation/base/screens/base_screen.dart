@@ -26,6 +26,7 @@ class _BaseScreenState extends State<BaseScreen> {
             i == _selectedIndexItem ? navIconSolidList[i] : navIconList[i], i),
       );
     }
+
     return Scaffold(
       body: SafeArea(child: navPages[_selectedIndexItem]),
       bottomNavigationBar: _buildNavContainer(navBarItemList),

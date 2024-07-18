@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:work_compass/features/authentication/presentation/login/getx/login_bindings.dart';
+import 'package:work_compass/features/authentication/presentation/login/screens/login_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/attendance/screens/attendance_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/base/screens/base_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/home/screens/home_screen.dart';
@@ -16,6 +18,12 @@ class Pages {
     ),GetPage<AppRoutes>(
       name: AppRoutes.base,
       page: () => const BaseScreen(),
+    ),
+
+    GetPage<AppRoutes>(
+      name: AppRoutes.login,
+      page: () => const LoginScreen(),
+      binding: LoginBindings(),
     ), GetPage<AppRoutes>(
       name: AppRoutes.home,
       page: () => const HomeScreen(),
