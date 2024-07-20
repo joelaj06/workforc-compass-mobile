@@ -26,18 +26,18 @@ abstract class Repository {
       });
       return right(response);
     } on FetchDataException catch (exception) {
-      return left(Failure(
-          message: exception.message));
+      return left(Failure.server(
+         message: exception.message));
     } on TimeoutException catch (_) {
 
-      return left(Failure(message: 'Request Timeout'));
+      return left(const Failure.server(message: 'Request Timeout'));
     } on AppException catch (exception) {
-      return left(Failure(
+      return left(Failure.client(
           message: exception.message));
     } catch (error, stackTrace) {
       AppLog.e(error, stackTrace);
       return left(
-        Failure(message: 'Something went wrong technically.'),
+        const Failure.generic(message: 'Something went wrong technically.'),
       );
     }
   }
@@ -53,7 +53,7 @@ abstract class Repository {
       }
     } on CacheException catch (exception) {
       return left(
-        Failure(
+        Failure.client(
           message: exception.message,
         ),
       );
@@ -63,7 +63,7 @@ abstract class Repository {
         stackTrace,
       );
       return left(
-        Failure(message: 'Something went wrong locally.'),
+        const Failure.client(message: 'Something went wrong locally.'),
       );
     }
   }

@@ -12,7 +12,7 @@ part of 'login_request.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 LoginRequest _$LoginRequestFromJson(Map<String, dynamic> json) {
   return _LoginRequest.fromJson(json);
@@ -78,11 +78,11 @@ class _$LoginRequestCopyWithImpl<$Res, $Val extends LoginRequest>
 }
 
 /// @nodoc
-abstract class _$$_LoginRequestCopyWith<$Res>
+abstract class _$$LoginRequestImplCopyWith<$Res>
     implements $LoginRequestCopyWith<$Res> {
-  factory _$$_LoginRequestCopyWith(
-          _$_LoginRequest value, $Res Function(_$_LoginRequest) then) =
-      __$$_LoginRequestCopyWithImpl<$Res>;
+  factory _$$LoginRequestImplCopyWith(
+          _$LoginRequestImpl value, $Res Function(_$LoginRequestImpl) then) =
+      __$$LoginRequestImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -92,11 +92,11 @@ abstract class _$$_LoginRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_LoginRequestCopyWithImpl<$Res>
-    extends _$LoginRequestCopyWithImpl<$Res, _$_LoginRequest>
-    implements _$$_LoginRequestCopyWith<$Res> {
-  __$$_LoginRequestCopyWithImpl(
-      _$_LoginRequest _value, $Res Function(_$_LoginRequest) _then)
+class __$$LoginRequestImplCopyWithImpl<$Res>
+    extends _$LoginRequestCopyWithImpl<$Res, _$LoginRequestImpl>
+    implements _$$LoginRequestImplCopyWith<$Res> {
+  __$$LoginRequestImplCopyWithImpl(
+      _$LoginRequestImpl _value, $Res Function(_$LoginRequestImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_LoginRequestCopyWithImpl<$Res>
     Object? password = null,
     Object? deviceToken = freezed,
   }) {
-    return _then(_$_LoginRequest(
+    return _then(_$LoginRequestImpl(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -125,14 +125,14 @@ class __$$_LoginRequestCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_LoginRequest implements _LoginRequest {
-  const _$_LoginRequest(
+class _$LoginRequestImpl implements _LoginRequest {
+  const _$LoginRequestImpl(
       {required this.email,
       required this.password,
       @JsonKey(name: 'device_token') this.deviceToken});
 
-  factory _$_LoginRequest.fromJson(Map<String, dynamic> json) =>
-      _$$_LoginRequestFromJson(json);
+  factory _$LoginRequestImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LoginRequestImplFromJson(json);
 
   @override
   final String email;
@@ -148,10 +148,10 @@ class _$_LoginRequest implements _LoginRequest {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoginRequest &&
+            other is _$LoginRequestImpl &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
                 other.password == password) &&
@@ -166,12 +166,12 @@ class _$_LoginRequest implements _LoginRequest {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoginRequestCopyWith<_$_LoginRequest> get copyWith =>
-      __$$_LoginRequestCopyWithImpl<_$_LoginRequest>(this, _$identity);
+  _$$LoginRequestImplCopyWith<_$LoginRequestImpl> get copyWith =>
+      __$$LoginRequestImplCopyWithImpl<_$LoginRequestImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_LoginRequestToJson(
+    return _$$LoginRequestImplToJson(
       this,
     );
   }
@@ -182,10 +182,10 @@ abstract class _LoginRequest implements LoginRequest {
           {required final String email,
           required final String password,
           @JsonKey(name: 'device_token') final String? deviceToken}) =
-      _$_LoginRequest;
+      _$LoginRequestImpl;
 
   factory _LoginRequest.fromJson(Map<String, dynamic> json) =
-      _$_LoginRequest.fromJson;
+      _$LoginRequestImpl.fromJson;
 
   @override
   String get email;
@@ -196,6 +196,6 @@ abstract class _LoginRequest implements LoginRequest {
   String? get deviceToken;
   @override
   @JsonKey(ignore: true)
-  _$$_LoginRequestCopyWith<_$_LoginRequest> get copyWith =>
+  _$$LoginRequestImplCopyWith<_$LoginRequestImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

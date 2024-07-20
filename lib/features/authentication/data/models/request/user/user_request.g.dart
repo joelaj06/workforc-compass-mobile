@@ -6,8 +6,8 @@ part of 'user_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserRequest _$$_UserRequestFromJson(Map<String, dynamic> json) =>
-    _$_UserRequest(
+_$UserRequestImpl _$$UserRequestImplFromJson(Map<String, dynamic> json) =>
+    _$UserRequestImpl(
       id: json['id'] as String?,
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
@@ -25,7 +25,7 @@ _$_UserRequest _$$_UserRequestFromJson(Map<String, dynamic> json) =>
       isAgent: json['is_agent'] as bool?,
     );
 
-Map<String, dynamic> _$$_UserRequestToJson(_$_UserRequest instance) =>
+Map<String, dynamic> _$$UserRequestImplToJson(_$UserRequestImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'first_name': instance.firstName,

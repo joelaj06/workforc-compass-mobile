@@ -1,5 +1,3 @@
-
-
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failure.dart';
@@ -26,23 +24,36 @@ class AuthRepositoryImpl extends Repository implements AuthRepository {
   @override
   Future<Either<Failure, User>> login(LoginRequest request) async {
     final Either<Failure, LoginResponse> response =
-        await makeRequest(authRemoteDataSource.login(request));
-    return response.fold((Failure failure) => left(failure),
-        (LoginResponse response) async {
-      await authLocalDataSource.persistAuthResponse(response);
-      return right(response.user);
-    });
+    await makeRequest(authRemoteDataSource.login(request));
+
+    return response.fold((Failure failure) {
+      return left(failure);
+    },
+            (LoginResponse response) async {
+          await authLocalDataSource.persistAuthResponse(response);
+          final User user = User(id: response.id,
+              firstName: response.firstName,
+              lastName: response.lastName ?? '',
+              email: response.email ?? '',
+              isAgent: false);
+          return right(user);
+        });
   }
 
   @override
   Future<Either<Failure, User>> loadUser() async {
     final Either<Failure, LoginResponse> response =
-        await makeLocalRequest(authLocalDataSource.getAuthResponse);
+    await makeLocalRequest(authLocalDataSource.getAuthResponse);
     return response.fold((Failure failure) => left(failure),
-        (LoginResponse response) async {
-      await authLocalDataSource.persistAuthResponse(response);
-      return right(response.user);
-    });
+            (LoginResponse response) async {
+          await authLocalDataSource.persistAuthResponse(response);
+          final User user = User(id: response.id,
+              firstName: response.firstName,
+              lastName: response.lastName ?? '',
+              email: response.email ?? '',
+              isAgent: false);
+          return right(user);
+        });
   }
 
   @override
@@ -88,10 +99,10 @@ class AuthRepositoryImpl extends Repository implements AuthRepository {
   @override
   Future<Either<Failure, MessageResponse>> logout() async {
     final Either<Failure, MessageResponse> response =
-        await makeRequest(authRemoteDataSource.logout());
+    await makeRequest(authRemoteDataSource.logout());
     return response.fold(
-      (Failure failure) => left(failure),
-      (MessageResponse response) async {
+          (Failure failure) => left(failure),
+          (MessageResponse response) async {
         await authLocalDataSource.deleteAuthResponse();
         return right(response);
       },

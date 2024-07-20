@@ -12,7 +12,7 @@ part of 'message_response.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MessageResponse _$MessageResponseFromJson(Map<String, dynamic> json) {
   return _MessageResponse.fromJson(json);
@@ -62,22 +62,22 @@ class _$MessageResponseCopyWithImpl<$Res, $Val extends MessageResponse>
 }
 
 /// @nodoc
-abstract class _$$_MessageResponseCopyWith<$Res>
+abstract class _$$MessageResponseImplCopyWith<$Res>
     implements $MessageResponseCopyWith<$Res> {
-  factory _$$_MessageResponseCopyWith(
-          _$_MessageResponse value, $Res Function(_$_MessageResponse) then) =
-      __$$_MessageResponseCopyWithImpl<$Res>;
+  factory _$$MessageResponseImplCopyWith(_$MessageResponseImpl value,
+          $Res Function(_$MessageResponseImpl) then) =
+      __$$MessageResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$_MessageResponseCopyWithImpl<$Res>
-    extends _$MessageResponseCopyWithImpl<$Res, _$_MessageResponse>
-    implements _$$_MessageResponseCopyWith<$Res> {
-  __$$_MessageResponseCopyWithImpl(
-      _$_MessageResponse _value, $Res Function(_$_MessageResponse) _then)
+class __$$MessageResponseImplCopyWithImpl<$Res>
+    extends _$MessageResponseCopyWithImpl<$Res, _$MessageResponseImpl>
+    implements _$$MessageResponseImplCopyWith<$Res> {
+  __$$MessageResponseImplCopyWithImpl(
+      _$MessageResponseImpl _value, $Res Function(_$MessageResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +85,7 @@ class __$$_MessageResponseCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$_MessageResponse(
+    return _then(_$MessageResponseImpl(
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -96,11 +96,11 @@ class __$$_MessageResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MessageResponse extends _MessageResponse {
-  const _$_MessageResponse({this.message}) : super._();
+class _$MessageResponseImpl extends _MessageResponse {
+  const _$MessageResponseImpl({this.message}) : super._();
 
-  factory _$_MessageResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_MessageResponseFromJson(json);
+  factory _$MessageResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MessageResponseImplFromJson(json);
 
   @override
   final String? message;
@@ -111,10 +111,10 @@ class _$_MessageResponse extends _MessageResponse {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MessageResponse &&
+            other is _$MessageResponseImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -125,28 +125,30 @@ class _$_MessageResponse extends _MessageResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MessageResponseCopyWith<_$_MessageResponse> get copyWith =>
-      __$$_MessageResponseCopyWithImpl<_$_MessageResponse>(this, _$identity);
+  _$$MessageResponseImplCopyWith<_$MessageResponseImpl> get copyWith =>
+      __$$MessageResponseImplCopyWithImpl<_$MessageResponseImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MessageResponseToJson(
+    return _$$MessageResponseImplToJson(
       this,
     );
   }
 }
 
 abstract class _MessageResponse extends MessageResponse {
-  const factory _MessageResponse({final String? message}) = _$_MessageResponse;
+  const factory _MessageResponse({final String? message}) =
+      _$MessageResponseImpl;
   const _MessageResponse._() : super._();
 
   factory _MessageResponse.fromJson(Map<String, dynamic> json) =
-      _$_MessageResponse.fromJson;
+      _$MessageResponseImpl.fromJson;
 
   @override
   String? get message;
   @override
   @JsonKey(ignore: true)
-  _$$_MessageResponseCopyWith<_$_MessageResponse> get copyWith =>
+  _$$MessageResponseImplCopyWith<_$MessageResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

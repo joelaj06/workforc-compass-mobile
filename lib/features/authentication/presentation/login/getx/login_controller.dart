@@ -74,6 +74,8 @@ class LoginController extends GetxController{
           (Failure failure) {
         isLoading(false);
         AppSnacks.showError('Login', failure.message);
+        print('Printing something');
+        print(failure.message);
       },
           (User user) {
         isLoading(false);

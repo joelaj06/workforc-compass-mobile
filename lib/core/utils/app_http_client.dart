@@ -123,6 +123,7 @@ class AppHTTPClient {
 
   Map<String, dynamic> _processResponse(
       http.Response response, String endpoint) {
+
     if (response.statusCode != 200 && response.statusCode != 201) {
       AppLog.i(
           '============================ ERROR THROWN ========================');
@@ -197,7 +198,7 @@ class AuthInterceptor extends InterceptorContract  {
     final Map<String, String> headers = Map<String, String>.from(request.headers);
     final Map<String, String> newHeaders = <String, String>{
       HttpHeaders.contentTypeHeader: 'application/json',
-      'Authorization': 'Bearer ${response?.user.token}'
+      'Authorization': 'Bearer ${response?.token}'
     };
     headers.addAll(newHeaders);
 

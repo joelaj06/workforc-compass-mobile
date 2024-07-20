@@ -6,7 +6,7 @@ part of 'user_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
+_$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       id: json['_id'] as String,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
@@ -24,7 +24,8 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       isAgent: json['is_agent'] as bool,
     );
 
-Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
+Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
+    <String, dynamic>{
       '_id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
