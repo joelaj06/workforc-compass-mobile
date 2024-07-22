@@ -1,18 +1,9 @@
-class _AssetSVGs {
-  _AssetSVGs._();
-  static String login = 'assets/svgs/login.svg';
+class AssetSVGs {
+
+  static String clockCheck = 'assets/svgs/clock-check.svg';
+  static String clockDown = 'assets/svgs/clock-down.svg';
+  static String clockUp = 'assets/svgs/clock-up.svg';
   static String logo = 'assets/svgs/logo.svg';
 }
 
-enum AssetSVGs { login, logo }
 
-extension X on AssetSVGs {
-  String get path {
-    switch (this) {
-      case AssetSVGs.login:
-        return _AssetSVGs.login;
-      case AssetSVGs.logo:
-        return _AssetSVGs.logo;
-    }
-  }
-}

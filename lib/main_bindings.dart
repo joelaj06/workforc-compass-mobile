@@ -1,4 +1,9 @@
 
+import 'package:get/get.dart';
+import 'package:work_compass/features/workforce_compass/data/datasources/worforce_remote_datasource_impl.dart';
+import 'package:work_compass/features/workforce_compass/data/repository/workforce_repository.dart';
+import 'package:work_compass/features/workforce_compass/data/repository/workforce_repository_impl.dart';
+
 import 'core/utils/app_http_client.dart';
 import 'core/utils/shared_preferences_wrapper.dart';
 import 'features/authentication/data/datasource/auth_local_data_source.dart';
@@ -6,7 +11,6 @@ import 'features/authentication/data/datasource/auth_remote_data_source.dart';
 import 'features/authentication/data/datasource/auth_remote_data_source_impl.dart';
 import 'features/authentication/data/repositories/auth_repository.dart';
 import 'features/authentication/data/repositories/auth_repository_impl.dart';
-import 'package:get/get.dart';
 
 class MainBindings extends Bindings {
   @override
@@ -35,12 +39,12 @@ class MainBindings extends Bindings {
       ),
     );
 
-   /* Get.put<WorkforceRepository>(
+    Get.put<WorkForceRepository>(
       WorkforceRepositoryImpl(
-        bookmeRemoteDatasource: WorkforceRemoteDatasourceImpl(
-          client: Get.find(),
+        workforceRemoteDatasource: WorkforceRemoteDatasourceImpl(client: Get.find()
+          
         ),
       ),
-    );*/
+    );
   }
 }

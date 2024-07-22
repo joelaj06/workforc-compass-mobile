@@ -49,6 +49,9 @@ dependencies:
   http_interceptor: ^2.0.0
   calendar_date_picker2: ^1.1.5
   panara_dialogs: ^0.1.5
+  geocoding: ^3.0.0
+  geolocator: ^12.0.0
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +81,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/svgs/
 
   fonts:
     - family: Poppins
