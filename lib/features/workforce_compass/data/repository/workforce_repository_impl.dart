@@ -31,4 +31,13 @@ class WorkforceRepositoryImpl extends Repository
     return makeRequest(
         workforceRemoteDatasource.userCheckOut(attendanceRequest));
   }
+
+  @override
+  Future<Either<Failure, List<Attendance>>> fetchUserAttendance(
+      {required String userId,
+      required String startDate,
+      required String endDate}) {
+    return makeRequest(workforceRemoteDatasource.fetchUserAttendance(
+        userId: userId, startDate: startDate, endDate: endDate));
+  }
 }

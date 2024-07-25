@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:work_compass/features/authentication/presentation/login/getx/login_bindings.dart';
 import 'package:work_compass/features/authentication/presentation/login/screens/login_screen.dart';
+import 'package:work_compass/features/workforce_compass/presentation/attendance/getx/attendance_bindings.dart';
 import 'package:work_compass/features/workforce_compass/presentation/attendance/screens/attendance_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/base/screens/base_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/home/getx/home_bindings.dart';
@@ -21,6 +22,7 @@ class Pages {
       page: () => const BaseScreen(),
       bindings: <Bindings>[
         HomeBindings(),
+        AttendanceBindings(),
       ]
     ),
 
@@ -35,6 +37,7 @@ class Pages {
     ), GetPage<AppRoutes>(
       name: AppRoutes.attendance,
       page: () => const AttendanceScreen(),
+      binding: AttendanceBindings(),
     ), GetPage<AppRoutes>(
       name: AppRoutes.notification,
       page: () => const NotificationScreen(),

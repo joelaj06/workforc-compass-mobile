@@ -12,4 +12,10 @@ abstract class WorkForceRepository {
 
   Future<Either<Failure, Attendance>> userCheckOut(
       AttendanceRequest attendanceRequest);
+
+  Future<Either<Failure, List<Attendance>>> fetchUserAttendance({
+    required String userId,
+    required String startDate,
+    required String endDate,
+  });
 }

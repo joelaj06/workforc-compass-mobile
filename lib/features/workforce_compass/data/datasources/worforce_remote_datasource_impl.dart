@@ -28,8 +28,25 @@ class WorkforceRemoteDatasourceImpl implements WorkforceRemoteDatasource {
 
   @override
   Future<Attendance> userCheckOut(AttendanceRequest attendanceRequest) async {
-    final Map<String, dynamic> json = await _client
-        .post(WorkForceEndpoints.checkout(attendanceRequest.id!), body: attendanceRequest.toJson());
+    final Map<String, dynamic> json = await _client.post(
+        WorkForceEndpoints.checkout(attendanceRequest.id!),
+        body: attendanceRequest.toJson());
     return Attendance.fromJson(json);
+  }
+
+  @override
+  Future<List<Attendance>> fetchUserAttendance(
+      {required String userId,
+      required String startDate,
+      required String endDate}) async {
+    final Map<String, dynamic> json = await _client.get(
+        WorkForceEndpoints.attendance(
+            userId: userId, startDate: startDate, endDate: endDate));
+    final List<dynamic> items = json['items'] as List<dynamic>;
+    return List<Attendance>.from(
+      items.map<Attendance>(
+        (dynamic json) => Attendance.fromJson(json as Map<String, dynamic>),
+      ),
+    );
   }
 }

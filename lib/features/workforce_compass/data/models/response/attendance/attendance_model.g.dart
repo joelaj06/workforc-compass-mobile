@@ -13,7 +13,7 @@ _$AttendanceImpl _$$AttendanceImplFromJson(Map<String, dynamic> json) =>
       checkIn: json['check_in'] as String?,
       checkout: json['check_out'] as String?,
       location: json['location'] as String?,
-      completed: json['completed'] as String?,
+      completed: json['completed'] as bool?,
       createdAt: json['createdAt'] as String?,
     );
 

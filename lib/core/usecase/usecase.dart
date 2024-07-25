@@ -14,6 +14,7 @@ class PageParams {
     this.query,
     this.startDate,
     this.endDate,
+    this.userId,
 
   });
 
@@ -22,5 +23,6 @@ class PageParams {
   final String? query;
   final String? startDate;
   final String? endDate;
+  final String? userId;
 
 }

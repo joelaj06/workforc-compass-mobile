@@ -29,7 +29,7 @@ mixin _$Attendance {
   @JsonKey(name: 'check_out')
   String? get checkout => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
-  String? get completed => throw _privateConstructorUsedError;
+  bool? get completed => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $AttendanceCopyWith<$Res> {
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
-      String? completed,
+      bool? completed,
       String? createdAt});
 }
 
@@ -99,7 +99,7 @@ class _$AttendanceCopyWithImpl<$Res, $Val extends Attendance>
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -122,7 +122,7 @@ abstract class _$$AttendanceImplCopyWith<$Res>
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
-      String? completed,
+      bool? completed,
       String? createdAt});
 }
 
@@ -169,7 +169,7 @@ class __$$AttendanceImplCopyWithImpl<$Res>
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class _$AttendanceImpl extends _Attendance {
   @override
   final String? location;
   @override
-  final String? completed;
+  final bool? completed;
   @override
   final String? createdAt;
 
@@ -263,7 +263,7 @@ abstract class _Attendance extends Attendance {
       @JsonKey(name: 'check_in') final String? checkIn,
       @JsonKey(name: 'check_out') final String? checkout,
       final String? location,
-      final String? completed,
+      final bool? completed,
       final String? createdAt}) = _$AttendanceImpl;
   const _Attendance._() : super._();
 
@@ -285,7 +285,7 @@ abstract class _Attendance extends Attendance {
   @override
   String? get location;
   @override
-  String? get completed;
+  bool? get completed;
   @override
   String? get createdAt;
   @override
