@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -54,32 +55,38 @@ class HomeScreen extends GetView<HomeController> {
             ),
             GestureDetector(
               onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(50),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: context.colors.primary.shade50,
-                    width: 15,
+              child: AvatarGlow(
+                glowRadiusFactor: 0.1,
+                startDelay: const Duration(seconds: 5),
+                glowColor: context.colors.primary,
+                glowShape: BoxShape.circle,
+                child: Container(
+                  padding: const EdgeInsets.all(50),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: context.colors.primary.shade50,
+                      width: 15,
+                    ),
+                    shape: BoxShape.circle,
+                    color: context.colors.primary.shade400,
+                    //  borderRadius: BorderRadius.circular(50),
                   ),
-                  shape: BoxShape.circle,
-                  color: context.colors.primary.shade400,
-                  //  borderRadius: BorderRadius.circular(50),
-                ),
-                child: const Center(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(
-                        Icons.touch_app_outlined,
-                        color: Colors.white,
-                        size: 100,
-                      ),
-                      Text(
-                        'CLOCK IN',
-                        style: TextStyle(
+                  child: const Center(
+                    child: Column(
+                      children: <Widget>[
+                        Icon(
+                          Icons.touch_app_outlined,
                           color: Colors.white,
+                          size: 100,
                         ),
-                      )
-                    ],
+                        Text(
+                          'CLOCK IN',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

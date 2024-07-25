@@ -57,6 +57,9 @@ class AppTheme {
             fontFamily: AppFonts.base,
           ),
         ),
+        dividerTheme: DividerThemeData(
+          color: HintColor.color.shade200,
+        ),
         textTheme: TextTheme(
           displaySmall: h3,
           headlineMedium: h4,

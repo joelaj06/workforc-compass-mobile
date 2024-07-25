@@ -18,6 +18,18 @@ class DataFormatter{
   }
 
 
+  static DateTime getStartOfMonth(DateTime date) {
+    return DateTime(date.year, date.month, 1);
+  }
+
+  static DateTime getEndOfMonth(DateTime date) {
+    final DateTime startOfNextMonth = (date.month < 12)
+        ? DateTime(date.year, date.month + 1, 1)
+        : DateTime(date.year + 1, 1, 1);
+    return startOfNextMonth.subtract(const Duration(seconds: 1));
+  }
+
+
   static String formatDateToString(String date){
     // ==> 'Wednesday, January 10, 2012'
     if(date == '') {
