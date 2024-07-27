@@ -9,6 +9,7 @@ class AppRoutes {
  static const String notification = '/notification';
  static const String settings = '/settings';
  static const String more = '/more';
+ static const String task = '/task';
 
 
 }

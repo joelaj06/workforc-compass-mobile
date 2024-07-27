@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,6 +43,7 @@ class AppTextInputField extends StatefulWidget {
       this.borderRadiusOutline,
       this.labelTextPadding,
       this.fontWeight,
+      this.hintStyle,
       this.autofillHints,
       this.onEditingComplete})
       : super(key: key);
@@ -75,6 +75,7 @@ class AppTextInputField extends StatefulWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final Color? hintColor;
+  final TextStyle? hintStyle;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextAlign? textAlign;
@@ -195,6 +196,7 @@ class _AppTextInputFieldState extends State<AppTextInputField> {
                     prefixIcon: widget.prefixIcon,
                     suffixIcon: widget.suffixIcon,
                     hintText: widget.hintText,
+                    hintStyle: widget.hintStyle,
                   ),
                 ),
               ),

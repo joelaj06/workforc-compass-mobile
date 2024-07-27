@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -150,6 +149,7 @@ class AttendanceScreen extends GetView<AttendanceController> {
         padding: AppPaddings.mA.add(AppPaddings.mA),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Icon(
               IconlyLight.calendar,

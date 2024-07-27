@@ -1,14 +1,14 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-
 part 'login_response.freezed.dart';
+
 part 'login_response.g.dart';
 
 @freezed
 class LoginResponse with _$LoginResponse {
   const factory LoginResponse({
-    @JsonKey(name:'_id') required String id,
+    @JsonKey(name: '_id') required String id,
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String? lastName,
     required String? email,
@@ -22,8 +22,16 @@ class LoginResponse with _$LoginResponse {
     List<String>? skills,
     String? createdAt,
   }) = _LoginResponse;
-   const LoginResponse._();
+
+  const LoginResponse._();
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);
+
+  factory LoginResponse.empty() => const LoginResponse(
+        id: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+      );
 }

@@ -8,6 +8,8 @@ import 'package:work_compass/features/workforce_compass/presentation/home/getx/h
 import 'package:work_compass/features/workforce_compass/presentation/home/screens/home_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/more/screens/more_screens.dart';
 import 'package:work_compass/features/workforce_compass/presentation/notification/screens/notification_screen.dart';
+import 'package:work_compass/features/workforce_compass/presentation/task/getx/task_bindings.dart';
+import 'package:work_compass/features/workforce_compass/presentation/task/screens/task_screen.dart';
 
 import '../../../features/workforce_compass/presentation/onboarding/screens/onboarding_screen.dart';
 import 'app_routes.dart';
@@ -44,6 +46,11 @@ class Pages {
     ), GetPage<AppRoutes>(
       name: AppRoutes.more,
       page: () => const MoreScreen(),
+    ),
+ GetPage<AppRoutes>(
+      name: AppRoutes.task,
+      page: () => const TaskScreen(),
+   binding: TaskBindings(),
     ),
 
   ];

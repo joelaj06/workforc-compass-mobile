@@ -16,6 +16,7 @@ abstract class AppImageAssets{
   static const String plumber = '$_imageSource/plumber.png';
   static const String client = '$_imageSource/client.png';
   static const String labourBg = '$_imageSource/labour-bg.png';
+  static const String task = '$_imageSource/Task-cuate.png';
 
 
 
