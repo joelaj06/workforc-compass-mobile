@@ -15,7 +15,7 @@ class PageParams {
     this.startDate,
     this.endDate,
     this.userId,
-
+    this.search,
   });
 
   final int page;
@@ -24,5 +24,6 @@ class PageParams {
   final String? startDate;
   final String? endDate;
   final String? userId;
+  final String? search;
 
 }

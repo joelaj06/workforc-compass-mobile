@@ -21,7 +21,7 @@ class User with _$User {
     String? company,
     List<String>? skills,
     String? createdAt,
-    @JsonKey(name:'is_agent') required bool isAgent,
+    @JsonKey(name:'is_agent')  bool? isAgent,
   }) = _User;
 
   const User._();
@@ -34,6 +34,6 @@ class User with _$User {
     firstName: '',
     lastName: '',
     email: '',
-    isAgent: false,
+
   );
 }

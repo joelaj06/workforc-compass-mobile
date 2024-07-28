@@ -39,7 +39,7 @@ mixin _$User {
   List<String>? get skills => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_agent')
-  bool get isAgent => throw _privateConstructorUsedError;
+  bool? get isAgent => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,7 +65,7 @@ abstract class $UserCopyWith<$Res> {
       String? company,
       List<String>? skills,
       String? createdAt,
-      @JsonKey(name: 'is_agent') bool isAgent});
+      @JsonKey(name: 'is_agent') bool? isAgent});
 }
 
 /// @nodoc
@@ -94,7 +94,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? company = freezed,
     Object? skills = freezed,
     Object? createdAt = freezed,
-    Object? isAgent = null,
+    Object? isAgent = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -149,10 +149,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      isAgent: null == isAgent
+      isAgent: freezed == isAgent
           ? _value.isAgent
           : isAgent // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ) as $Val);
   }
 }
@@ -178,7 +178,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? company,
       List<String>? skills,
       String? createdAt,
-      @JsonKey(name: 'is_agent') bool isAgent});
+      @JsonKey(name: 'is_agent') bool? isAgent});
 }
 
 /// @nodoc
@@ -204,7 +204,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? company = freezed,
     Object? skills = freezed,
     Object? createdAt = freezed,
-    Object? isAgent = null,
+    Object? isAgent = freezed,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -259,10 +259,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      isAgent: null == isAgent
+      isAgent: freezed == isAgent
           ? _value.isAgent
           : isAgent // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
     ));
   }
 }
@@ -284,7 +284,7 @@ class _$UserImpl extends _User {
       this.company,
       final List<String>? skills,
       this.createdAt,
-      @JsonKey(name: 'is_agent') required this.isAgent})
+      @JsonKey(name: 'is_agent') this.isAgent})
       : _skills = skills,
         super._();
 
@@ -332,7 +332,7 @@ class _$UserImpl extends _User {
   final String? createdAt;
   @override
   @JsonKey(name: 'is_agent')
-  final bool isAgent;
+  final bool? isAgent;
 
   @override
   String toString() {
@@ -413,7 +413,7 @@ abstract class _User extends User {
       final String? company,
       final List<String>? skills,
       final String? createdAt,
-      @JsonKey(name: 'is_agent') required final bool isAgent}) = _$UserImpl;
+      @JsonKey(name: 'is_agent') final bool? isAgent}) = _$UserImpl;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -451,7 +451,7 @@ abstract class _User extends User {
   String? get createdAt;
   @override
   @JsonKey(name: 'is_agent')
-  bool get isAgent;
+  bool? get isAgent;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

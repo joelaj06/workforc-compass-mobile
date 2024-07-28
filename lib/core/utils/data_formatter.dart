@@ -33,7 +33,7 @@ class DataFormatter{
   static String formatDateToString(String date){
     // ==> 'Wednesday, January 10, 2012'
     if(date == '') {
-      return date;
+      return 'N/A';
     }
     final DateTime parsedDate = DateTime.parse(date);
     return DateFormat.yMMMMEEEEd().format(parsedDate);

@@ -10,6 +10,8 @@ import 'package:work_compass/core/presentation/utils/app_padding.dart';
 import 'package:work_compass/core/presentation/utils/app_spacing.dart';
 import 'package:work_compass/core/presentation/widgets/animated_column.dart';
 import 'package:work_compass/core/presentation/widgets/app_text_input_field.dart';
+import 'package:work_compass/core/utils/data_formatter.dart';
+import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
 import 'package:work_compass/features/workforce_compass/presentation/home/getx/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -19,20 +21,22 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     //  controller.getCurrentLocation();
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          _buildMainHeader(context),
-          const AppSpacing(
-            v: 10,
-          ),
-          _buildTitle('Pending Jobs'),
-          const AppSpacing(
-            v: 10,
-          ),
-          _buildPendingWorksList(),
-          _buildTitle('Tasks'),
-          Expanded(child: _buildAllTaskList()),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _buildMainHeader(context),
+            const AppSpacing(
+              v: 10,
+            ),
+            _buildTitle('Pending Jobs'),
+            const AppSpacing(
+              v: 10,
+            ),
+            _buildPendingWorksList(),
+            _buildTitle('Tasks'),
+            _buildAllTaskList(),
+          ],
+        ),
       ),
     );
   }
@@ -81,7 +85,10 @@ class HomeScreen extends GetView<HomeController> {
               IconlyLight.search,
               color: Colors.white,
             ),
+            onChanged: controller.onSearchQueryFieldInputChanged,
+            onFieldSubmitted: controller.onSearchQueryFieldSubmit,
             hintText: 'Search your works',
+            textColor: Colors.white,
             hintStyle: const TextStyle(
               color: Colors.white,
             ),
@@ -185,16 +192,16 @@ class HomeScreen extends GetView<HomeController> {
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
-          itemCount: 5,
+          itemCount: controller.tasks.length,
           itemBuilder: (BuildContext context, int index) {
-            return _buildPendingWorkCard(context);
+            return Obx(() => _buildPendingWorkCard(context, controller.tasks[index]));
           }),
     );
   }
 
 
 
-  Padding _buildPendingWorkCard(BuildContext context) {
+  Padding _buildPendingWorkCard(BuildContext context, Task task) {
     return Padding(
       padding: AppPaddings.sA,
       child: Container(
@@ -214,9 +221,9 @@ class HomeScreen extends GetView<HomeController> {
                 width: 180,
               ),
             ),
-            const Text(
-              'Fixed pipes at DND',
-              style: TextStyle(
+             Text(
+             task.title,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -226,7 +233,7 @@ class HomeScreen extends GetView<HomeController> {
                   IconlyLight.calendar,
                   color: context.colors.primary.shade900,
                 ),
-                const Text('25th Dec, 2024'),
+                 Text(DataFormatter.formatDateToString(task.startDate ?? '')),
               ],
             ),
             Align(

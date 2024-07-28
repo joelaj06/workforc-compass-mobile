@@ -1,24 +1,32 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart' hide Task;
+import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:work_compass/core/errors/errors.dart';
 import 'package:work_compass/core/presentation/routes/app_routes.dart';
+import 'package:work_compass/core/presentation/utils/app_snack.dart';
 import 'package:work_compass/core/usecase/usecase.dart';
 import 'package:work_compass/features/authentication/data/datasource/auth_local_data_source.dart';
 import 'package:work_compass/features/workforce_compass/data/datasources/location_service.dart';
 import 'package:work_compass/features/workforce_compass/data/models/response/organization/organization_model.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/organization/fetch_organization.dart';
+import 'package:work_compass/features/workforce_compass/domain/usecases/task/fetchUserTasks.dart';
 
 import '../../../../authentication/data/models/response/login/login_response.dart';
+import '../../../data/models/response/task/task_model.dart';
 
 class HomeController extends GetxController {
-  HomeController({required this.fetchOrganization});
+  HomeController({
+    required this.fetchOrganization,
+    required this.fetchUserTask,
+  });
 
   final FetchOrganization fetchOrganization;
+  final FetchUserTask fetchUserTask;
 
   //reactive variables
   Rx<Organization> organization = Organization.empty().obs;
@@ -27,22 +35,57 @@ class HomeController extends GetxController {
   RxString currentLocation = 'Current Location'.obs;
   RxBool isloadingCurrentLocation = false.obs;
   Rx<LoginResponse> user = LoginResponse.empty().obs;
+  RxList<Task> tasks = <Task>[].obs;
+  RxString searchQuery = ''.obs;
+  Rx<TextEditingController> searchTextEditingController =
+      TextEditingController().obs;
 
   LocationService locationService = LocationService();
   final AuthLocalDataSource _authLocalDataSource = Get.find();
 
   @override
   void onInit() {
-    runCurrentTime();
-    getOrganization();
-    getUser();
+    loadDeps();
     super.onInit();
   }
 
-  void navigateToTaskScreen(){
-    //Get.toNamed<dynamic>(AppRoutes.task);
-    print('tapped');
+  void loadDeps() {
+    runCurrentTime();
+    getOrganization();
+    getUser();
+    getUserTasks();
   }
+
+  void onSearchQueryFieldInputChanged(String val) {
+    searchQuery(val);
+    debugPrint(searchQuery.value);
+  }
+
+  void onSearchQueryFieldSubmit(String val) {
+    getUserTasks();
+  }
+
+  void navigateToTaskScreen() {
+    Get.toNamed<dynamic>(AppRoutes.task);
+  }
+
+  void getUserTasks() async {
+    final LoginResponse? user = await getUser();
+    final Either<Failure, List<Task>> failureOrTasks = await fetchUserTask(
+      PageParams(
+        page: 0,
+        size: 0,
+        userId: '63154dffb1b0b0d5dd26bce5',
+        search: searchQuery.value.isEmpty ? null : searchQuery.value,
+      ),
+    );
+    failureOrTasks.fold((Failure failure) {
+      AppSnack.show(title: 'Tasks', message: failure.message);
+    }, (List<Task> userTasks) {
+      tasks(userTasks);
+    });
+  }
+
   void getCurrentLocation() async {
     isloadingCurrentLocation(true);
     final Position position = await locationService.determinePosition();

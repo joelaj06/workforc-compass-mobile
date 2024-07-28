@@ -20,16 +20,7 @@ class TaskScreen extends GetView<TaskController> {
     controller.getCurrentLocation();
     return Scaffold(
       appBar: AppBar(
-        title: Obx(() => const Text('')),
-        /*actions: <Widget>[
-          Padding(
-            padding: AppPaddings.sR,
-            child: CircleAvatar(
-              backgroundColor: HintColor.color.shade300,
-              child: const Icon(Icons.person),
-            ),
-          )
-        ],*/
+        title:  const Text('Check In'),
       ),
       body: Center(
         child: AppAnimatedColumn(

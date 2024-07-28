@@ -10,4 +10,9 @@ class WorkForceEndpoints {
           required String startDate,
           required String endDate}) =>
       'attendance_dates/$userId?start_date=$startDate&end_date=$endDate';
+
+  static String userTask({required String userId, required String? search}) =>
+      search != null
+          ? 'tasks/user/$userId?search=$search'
+          : 'tasks/user/$userId';
 }

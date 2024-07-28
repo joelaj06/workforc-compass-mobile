@@ -21,7 +21,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       skills:
           (json['skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
       createdAt: json['createdAt'] as String?,
-      isAgent: json['is_agent'] as bool,
+      isAgent: json['is_agent'] as bool?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>

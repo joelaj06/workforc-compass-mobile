@@ -3,6 +3,7 @@ import 'package:work_compass/features/workforce_compass/data/datasources/workfor
 import 'package:work_compass/features/workforce_compass/data/models/request/attendance/attendance_request.dart';
 import 'package:work_compass/features/workforce_compass/data/models/response/attendance/attendance_model.dart';
 import 'package:work_compass/features/workforce_compass/data/models/response/organization/organization_model.dart';
+import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
 
 import '../../../../core/utils/app_http_client.dart';
 
@@ -46,6 +47,17 @@ class WorkforceRemoteDatasourceImpl implements WorkforceRemoteDatasource {
     return List<Attendance>.from(
       items.map<Attendance>(
         (dynamic json) => Attendance.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+  }
+
+  @override
+  Future<List<Task>> fetchUserTasks({required String userId, required String? search}) async {
+    final Map<String, dynamic> json = await _client.get(WorkForceEndpoints.userTask(userId: userId, search: search));
+    final List<dynamic> items = json['items'] as List<dynamic>;
+    return List<Task>.from(
+      items.map<Task>(
+            (dynamic json) => Task.fromJson(json as Map<String, dynamic>),
       ),
     );
   }
