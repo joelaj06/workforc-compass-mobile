@@ -13,7 +13,7 @@ import 'package:work_compass/core/presentation/app/work_compass.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const WorkCompass());
+    await tester.pumpWidget(const WorkCompass(token: '',));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

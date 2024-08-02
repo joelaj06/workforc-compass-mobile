@@ -10,6 +10,8 @@ class AppRoutes {
  static const String settings = '/settings';
  static const String more = '/more';
  static const String task = '/task';
+ static const String chats = '/chats';
+ static const String messages = '/messages';
 
 
 }

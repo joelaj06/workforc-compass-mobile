@@ -15,6 +15,7 @@ class Task with _$Task {
     User? assignee,
     String? startDate,
     User? reviewer,
+    required String? status,
   }) = _Task;
 
   const Task._();
@@ -25,6 +26,7 @@ class Task with _$Task {
   factory Task.empty() =>  const Task(
     title: '',
     description: '',
-    id: ''
+    id: '',
+    status: '',
   );
 }

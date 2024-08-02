@@ -20,6 +20,7 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     //  controller.getCurrentLocation();
+    //controller.getUserTasks();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -33,8 +34,8 @@ class HomeScreen extends GetView<HomeController> {
               v: 10,
             ),
             _buildPendingWorksList(),
-            _buildTitle('Tasks'),
-            _buildAllTaskList(),
+            _buildTitle('Completed'),
+            _buildCompletedTaskList(),
           ],
         ),
       ),
@@ -43,16 +44,16 @@ class HomeScreen extends GetView<HomeController> {
 
   Padding _buildTitle(String title) {
     return Padding(
-          padding: AppPaddings.mH,
-          child:  Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              textAlign: TextAlign.start,
-            ),
-          ),
-        );
+      padding: AppPaddings.mH,
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          textAlign: TextAlign.start,
+        ),
+      ),
+    );
   }
 
   Widget _buildMainHeader(BuildContext context) {
@@ -87,6 +88,7 @@ class HomeScreen extends GetView<HomeController> {
             ),
             onChanged: controller.onSearchQueryFieldInputChanged,
             onFieldSubmitted: controller.onSearchQueryFieldSubmit,
+            textInputType: TextInputType.text,
             hintText: 'Search your works',
             textColor: Colors.white,
             hintStyle: const TextStyle(
@@ -98,20 +100,38 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Widget _buildAllTaskList(){
+  Widget _buildCompletedTaskList() {
     return SizedBox(
       height: 300,
-      child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: 5,
-          itemBuilder: (BuildContext context, int index) {
-            return _buildAllTaskListCard(context);
-          }),
+      child: Obx(
+        () => controller.isLoading.value
+            ? const Center(
+                child: SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: CircularProgressIndicator.adaptive()),
+              )
+            : controller.completedTasks.isEmpty
+                ? const Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('No completed tasks found'),
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.completedTasks.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _buildCompletedTaskListCard(
+                          context, controller.completedTasks[index]);
+                    }),
+      ),
     );
   }
 
-  Widget _buildAllTaskListCard(BuildContext context){
-   return Padding(
+  Widget _buildCompletedTaskListCard(BuildContext context, Task task) {
+    return Padding(
       padding: AppPaddings.sA,
       child: GestureDetector(
         onTap: controller.navigateToTaskScreen,
@@ -136,9 +156,9 @@ class HomeScreen extends GetView<HomeController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Text(
-                      'Fixed pipes at DND',
-                      style: TextStyle(
+                    Text(
+                      task.title,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -155,10 +175,11 @@ class HomeScreen extends GetView<HomeController> {
                                   IconlyLight.calendar,
                                   color: context.colors.primary.shade900,
                                 ),
-                                const Text('25th Dec, 2024'),
+                                Text(DataFormatter.formatDateToString(
+                                    task.startDate ?? '')),
                               ],
                             ),
-                           /* SizedBox(
+                            /* SizedBox(
                               child: Container(
                                 padding: AppPaddings.sA.add(AppPaddings.sH),
                                 decoration: BoxDecoration(
@@ -175,7 +196,6 @@ class HomeScreen extends GetView<HomeController> {
                         )
                       ],
                     ),
-
                   ],
                 ),
               )
@@ -189,17 +209,25 @@ class HomeScreen extends GetView<HomeController> {
   Widget _buildPendingWorksList() {
     return SizedBox(
       height: 300,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemCount: controller.tasks.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Obx(() => _buildPendingWorkCard(context, controller.tasks[index]));
-          }),
+      child: Obx(
+        () => controller.isLoading.value
+            ? const Center(
+                child: SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: CircularProgressIndicator.adaptive()),
+              )
+            : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: controller.tasks.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Obx(() =>
+                      _buildPendingWorkCard(context, controller.tasks[index]));
+                }),
+      ),
     );
   }
-
-
 
   Padding _buildPendingWorkCard(BuildContext context, Task task) {
     return Padding(
@@ -221,8 +249,8 @@ class HomeScreen extends GetView<HomeController> {
                 width: 180,
               ),
             ),
-             Text(
-             task.title,
+            Text(
+              task.title,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -233,7 +261,7 @@ class HomeScreen extends GetView<HomeController> {
                   IconlyLight.calendar,
                   color: context.colors.primary.shade900,
                 ),
-                 Text(DataFormatter.formatDateToString(task.startDate ?? '')),
+                Text(DataFormatter.formatDateToString(task.startDate ?? '')),
               ],
             ),
             Align(
@@ -245,13 +273,17 @@ class HomeScreen extends GetView<HomeController> {
                   child: Container(
                     padding: AppPaddings.sA.add(AppPaddings.sH),
                     decoration: BoxDecoration(
-                      color: context.colors.primary,
+                        color: context.colors.primary,
                         borderRadius: BorderRadius.circular(50),
-                        border:
-                            Border.all(color: context.colors.primary, width: 2)),
-                    child: const Text('View',
-                    style: TextStyle(color: Colors.white,),
-                    textAlign: TextAlign.center,),
+                        border: Border.all(
+                            color: context.colors.primary, width: 2)),
+                    child: const Text(
+                      'View',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),

@@ -15,4 +15,10 @@ class WorkForceEndpoints {
       search != null
           ? 'tasks/user/$userId?search=$search'
           : 'tasks/user/$userId';
+
+  static const String chats = 'chats';
+  static const String initiateChat = 'chats/initiate';
+  static String message(String chatId) => 'chats/$chatId/message';
+
+  static String messages(String chatId) =>'chats/$chatId/messages';
 }

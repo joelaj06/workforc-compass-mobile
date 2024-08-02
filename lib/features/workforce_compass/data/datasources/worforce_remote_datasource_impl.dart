@@ -6,6 +6,12 @@ import 'package:work_compass/features/workforce_compass/data/models/response/org
 import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
 
 import '../../../../core/utils/app_http_client.dart';
+import '../models/listpage/listpage.dart';
+import '../models/request/chat/chat_request.dart';
+import '../models/request/message/message_request.dart';
+import '../models/response/chat/chat_model.dart';
+import '../models/response/chat/initiate_chat_model.dart';
+import '../models/response/message/message_model.dart';
 
 class WorkforceRemoteDatasourceImpl implements WorkforceRemoteDatasource {
   WorkforceRemoteDatasourceImpl({required AppHTTPClient client})
@@ -60,5 +66,53 @@ class WorkforceRemoteDatasourceImpl implements WorkforceRemoteDatasource {
             (dynamic json) => Task.fromJson(json as Map<String, dynamic>),
       ),
     );
+  }
+
+  @override
+  Future<ListPage<Chat>> fetchUserChats() async {
+    final Map<String, dynamic> json = await _client.get(WorkForceEndpoints.chats);
+    final List<dynamic> items = json['items'] as List<dynamic>;
+    final List<Chat> chats = List<Chat>.from(
+      items.map<Chat>(
+            (dynamic json) => Chat.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return ListPage<Chat>(
+      grandTotalCount: int.parse(json['total_count'] as String),
+      itemList: chats,
+    );
+  }
+
+  @override
+  Future<InitiateChat> initiateChat({required ChatRequest chatRequest}) async {
+    final Map<String, dynamic> json = await _client.post(
+      WorkForceEndpoints.initiateChat,
+      body: chatRequest.toJson(),
+    );
+    return InitiateChat.fromJson(json);
+  }
+
+  @override
+  Future<ListPage<Message>> fetchMessages({required String chatId}) async {
+    final Map<String, dynamic> json =
+    await _client.get(WorkForceEndpoints.messages(chatId));
+    final List<dynamic> items = json['items'] as List<dynamic>;
+    final List<Message> messages = List<Message>.from(
+      items.map<Message>(
+            (dynamic json) => Message.fromJson(json as Map<String, dynamic>),
+      ),
+    );
+    return ListPage<Message>(
+      grandTotalCount: int.parse(json['total_count'] as String),
+      itemList: messages,
+    );
+  }
+
+  @override
+  Future<Message> sendMessage(
+      {required String chatId, required MessageRequest messageRequest}) async {
+    final Map<String, dynamic> json = await _client
+        .post(WorkForceEndpoints.message(chatId), body: messageRequest.toJson());
+    return Message.fromJson(json);
   }
 }

@@ -30,7 +30,7 @@ mixin _$User {
   String? get address => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
-  String? get image => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_title')
   String? get jobTitle => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_description')
@@ -59,7 +59,7 @@ abstract class $UserCopyWith<$Res> {
       String? address,
       String? token,
       String? phone,
-      String? image,
+      String? imageUrl,
       @JsonKey(name: 'job_title') String? jobTitle,
       @JsonKey(name: 'job_description') String? jobDescription,
       String? company,
@@ -88,7 +88,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? address = freezed,
     Object? token = freezed,
     Object? phone = freezed,
-    Object? image = freezed,
+    Object? imageUrl = freezed,
     Object? jobTitle = freezed,
     Object? jobDescription = freezed,
     Object? company = freezed,
@@ -125,9 +125,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       jobTitle: freezed == jobTitle
           ? _value.jobTitle
@@ -172,7 +172,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? address,
       String? token,
       String? phone,
-      String? image,
+      String? imageUrl,
       @JsonKey(name: 'job_title') String? jobTitle,
       @JsonKey(name: 'job_description') String? jobDescription,
       String? company,
@@ -198,7 +198,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? address = freezed,
     Object? token = freezed,
     Object? phone = freezed,
-    Object? image = freezed,
+    Object? imageUrl = freezed,
     Object? jobTitle = freezed,
     Object? jobDescription = freezed,
     Object? company = freezed,
@@ -235,9 +235,9 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      imageUrl: freezed == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       jobTitle: freezed == jobTitle
           ? _value.jobTitle
@@ -278,7 +278,7 @@ class _$UserImpl extends _User {
       this.address,
       this.token,
       this.phone,
-      this.image,
+      this.imageUrl,
       @JsonKey(name: 'job_title') this.jobTitle,
       @JsonKey(name: 'job_description') this.jobDescription,
       this.company,
@@ -309,7 +309,7 @@ class _$UserImpl extends _User {
   @override
   final String? phone;
   @override
-  final String? image;
+  final String? imageUrl;
   @override
   @JsonKey(name: 'job_title')
   final String? jobTitle;
@@ -336,7 +336,7 @@ class _$UserImpl extends _User {
 
   @override
   String toString() {
-    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, token: $token, phone: $phone, image: $image, jobTitle: $jobTitle, jobDescription: $jobDescription, company: $company, skills: $skills, createdAt: $createdAt, isAgent: $isAgent)';
+    return 'User(id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, token: $token, phone: $phone, imageUrl: $imageUrl, jobTitle: $jobTitle, jobDescription: $jobDescription, company: $company, skills: $skills, createdAt: $createdAt, isAgent: $isAgent)';
   }
 
   @override
@@ -353,7 +353,8 @@ class _$UserImpl extends _User {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.image, image) || other.image == image) &&
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl) &&
             (identical(other.jobTitle, jobTitle) ||
                 other.jobTitle == jobTitle) &&
             (identical(other.jobDescription, jobDescription) ||
@@ -376,7 +377,7 @@ class _$UserImpl extends _User {
       address,
       token,
       phone,
-      image,
+      imageUrl,
       jobTitle,
       jobDescription,
       company,
@@ -407,7 +408,7 @@ abstract class _User extends User {
       final String? address,
       final String? token,
       final String? phone,
-      final String? image,
+      final String? imageUrl,
       @JsonKey(name: 'job_title') final String? jobTitle,
       @JsonKey(name: 'job_description') final String? jobDescription,
       final String? company,
@@ -436,7 +437,7 @@ abstract class _User extends User {
   @override
   String? get phone;
   @override
-  String? get image;
+  String? get imageUrl;
   @override
   @JsonKey(name: 'job_title')
   String? get jobTitle;

@@ -17,6 +17,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
       reviewer: json['reviewer'] == null
           ? null
           : User.fromJson(json['reviewer'] as Map<String, dynamic>),
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
@@ -27,4 +28,5 @@ Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) =>
       'assignee': instance.assignee,
       'startDate': instance.startDate,
       'reviewer': instance.reviewer,
+      'status': instance.status,
     };

@@ -15,7 +15,7 @@ class User with _$User {
     String? address,
     String? token,
     String? phone,
-    String? image,
+    String? imageUrl,
     @JsonKey(name: 'job_title') String? jobTitle,
     @JsonKey(name: 'job_description') String? jobDescription,
     String? company,

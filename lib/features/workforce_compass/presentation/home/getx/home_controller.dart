@@ -39,6 +39,7 @@ class HomeController extends GetxController {
   RxString searchQuery = ''.obs;
   Rx<TextEditingController> searchTextEditingController =
       TextEditingController().obs;
+  RxBool isLoading = false.obs;
 
   LocationService locationService = LocationService();
   final AuthLocalDataSource _authLocalDataSource = Get.find();
@@ -56,6 +57,11 @@ class HomeController extends GetxController {
     getUserTasks();
   }
 
+  RxList<Task> get completedTasks => tasks
+      .where((Task task) => task.status?.toLowerCase() == 'completed')
+      .toList()
+      .obs;
+
   void onSearchQueryFieldInputChanged(String val) {
     searchQuery(val);
     debugPrint(searchQuery.value);
@@ -70,18 +76,21 @@ class HomeController extends GetxController {
   }
 
   void getUserTasks() async {
+    isLoading(true);
     final LoginResponse? user = await getUser();
     final Either<Failure, List<Task>> failureOrTasks = await fetchUserTask(
       PageParams(
         page: 0,
         size: 0,
-        userId: '63154dffb1b0b0d5dd26bce5',
+        userId: user?.id,
         search: searchQuery.value.isEmpty ? null : searchQuery.value,
       ),
     );
     failureOrTasks.fold((Failure failure) {
+      isLoading(false);
       AppSnack.show(title: 'Tasks', message: failure.message);
     }, (List<Task> userTasks) {
+      isLoading(false);
       tasks(userTasks);
     });
   }

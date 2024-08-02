@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 //mb - 192.168.108.217
-//wifi - 192.168.8.197
-const String socketUrlLocal = kIsWeb ? 'http://localhost:3000/':'http://10.0.2.2:3000/';
+const String ip =  '192.168.8.197';
+const String socketUrlLocal = kIsWeb ? 'http://localhost:3000/':'http://$ip:3000/';
 const String socketUrlLive = 'https://bookme-vfk0.onrender.com';
-const String baseUrlLocal = kIsWeb ? 'http://localhost:3000/api/':'http://192.168.8.197:3000/api/';
+const String baseUrlLocal = kIsWeb ? 'http://localhost:3000/api/':'http://$ip:3000/api/';
 const String baseUrl = 'https://bookme-vfk0.onrender.com/api/';
 enum Environment { development, production }
 

@@ -27,6 +27,7 @@ mixin _$Task {
   User? get assignee => throw _privateConstructorUsedError;
   String? get startDate => throw _privateConstructorUsedError;
   User? get reviewer => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +45,8 @@ abstract class $TaskCopyWith<$Res> {
       String? description,
       User? assignee,
       String? startDate,
-      User? reviewer});
+      User? reviewer,
+      String? status});
 
   $UserCopyWith<$Res>? get assignee;
   $UserCopyWith<$Res>? get reviewer;
@@ -69,6 +71,7 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? assignee = freezed,
     Object? startDate = freezed,
     Object? reviewer = freezed,
+    Object? status = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -95,6 +98,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
               as User?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -136,7 +143,8 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       String? description,
       User? assignee,
       String? startDate,
-      User? reviewer});
+      User? reviewer,
+      String? status});
 
   @override
   $UserCopyWith<$Res>? get assignee;
@@ -160,6 +168,7 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? assignee = freezed,
     Object? startDate = freezed,
     Object? reviewer = freezed,
+    Object? status = freezed,
   }) {
     return _then(_$TaskImpl(
       id: null == id
@@ -186,6 +195,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
               as User?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -199,7 +212,8 @@ class _$TaskImpl extends _Task {
       this.description,
       this.assignee,
       this.startDate,
-      this.reviewer})
+      this.reviewer,
+      required this.status})
       : super._();
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
@@ -218,10 +232,12 @@ class _$TaskImpl extends _Task {
   final String? startDate;
   @override
   final User? reviewer;
+  @override
+  final String? status;
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title, description: $description, assignee: $assignee, startDate: $startDate, reviewer: $reviewer)';
+    return 'Task(id: $id, title: $title, description: $description, assignee: $assignee, startDate: $startDate, reviewer: $reviewer, status: $status)';
   }
 
   @override
@@ -238,13 +254,14 @@ class _$TaskImpl extends _Task {
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.reviewer, reviewer) ||
-                other.reviewer == reviewer));
+                other.reviewer == reviewer) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, title, description, assignee, startDate, reviewer);
+  int get hashCode => Object.hash(runtimeType, id, title, description, assignee,
+      startDate, reviewer, status);
 
   @JsonKey(ignore: true)
   @override
@@ -267,7 +284,8 @@ abstract class _Task extends Task {
       final String? description,
       final User? assignee,
       final String? startDate,
-      final User? reviewer}) = _$TaskImpl;
+      final User? reviewer,
+      required final String? status}) = _$TaskImpl;
   const _Task._() : super._();
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
@@ -285,6 +303,8 @@ abstract class _Task extends Task {
   String? get startDate;
   @override
   User? get reviewer;
+  @override
+  String? get status;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>
