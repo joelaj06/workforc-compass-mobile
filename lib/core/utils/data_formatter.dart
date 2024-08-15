@@ -61,8 +61,9 @@ class DataFormatter{
   }
 
 
+  /// ==> 'Wednesday, January 10, 2012'
   static String formatDateToString(String date){
-    // ==> 'Wednesday, January 10, 2012'
+
     if(date == '') {
       return 'N/A';
     }

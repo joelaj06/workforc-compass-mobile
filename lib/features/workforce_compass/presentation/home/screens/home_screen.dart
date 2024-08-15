@@ -104,28 +104,29 @@ class HomeScreen extends GetView<HomeController> {
     return SizedBox(
       height: 300,
       child: Obx(
-        () => controller.isLoading.value
+            () =>
+        controller.isLoading.value
             ? const Center(
-                child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: CircularProgressIndicator.adaptive()),
-              )
+          child: SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive()),
+        )
             : controller.completedTasks.isEmpty
-                ? const Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('No completed tasks found'),
-                    ),
-                  )
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: controller.completedTasks.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _buildCompletedTaskListCard(
-                          context, controller.completedTasks[index]);
-                    }),
+            ? const Align(
+          alignment: Alignment.topCenter,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('No completed tasks found'),
+          ),
+        )
+            : ListView.builder(
+            shrinkWrap: true,
+            itemCount: controller.completedTasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildCompletedTaskListCard(
+                  context, controller.completedTasks[index]);
+            }),
       ),
     );
   }
@@ -134,7 +135,7 @@ class HomeScreen extends GetView<HomeController> {
     return Padding(
       padding: AppPaddings.sA,
       child: GestureDetector(
-        onTap: controller.navigateToTaskScreen,
+        onTap: () => controller.navigateToTaskScreen(task),
         child: Container(
           height: 100,
           padding: AppPaddings.sA,
@@ -179,19 +180,7 @@ class HomeScreen extends GetView<HomeController> {
                                     task.startDate ?? '')),
                               ],
                             ),
-                            /* SizedBox(
-                              child: Container(
-                                padding: AppPaddings.sA.add(AppPaddings.sH),
-                                decoration: BoxDecoration(
-                                   // color: context.colors.primary,
-                                    borderRadius: BorderRadius.circular(50),
-                                    border:
-                                    Border.all(color: context.colors.primary, width: 2)),
-                                child: const Text('View',
-                                  style: TextStyle(color: Colors.white,),
-                                  textAlign: TextAlign.center,),
-                              ),
-                            ),*/
+
                           ],
                         )
                       ],
@@ -210,21 +199,22 @@ class HomeScreen extends GetView<HomeController> {
     return SizedBox(
       height: 300,
       child: Obx(
-        () => controller.isLoading.value
+            () =>
+        controller.isLoading.value
             ? const Center(
-                child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: CircularProgressIndicator.adaptive()),
-              )
+          child: SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator.adaptive()),
+        )
             : ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: controller.tasks.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Obx(() =>
-                      _buildPendingWorkCard(context, controller.tasks[index]));
-                }),
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: controller.tasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Obx(() =>
+                  _buildPendingWorkCard(context, controller.tasks[index]));
+            }),
       ),
     );
   }
@@ -267,7 +257,9 @@ class HomeScreen extends GetView<HomeController> {
             Align(
               alignment: Alignment.bottomRight,
               child: GestureDetector(
-                onTap: controller.navigateToTaskScreen,
+                onTap: () {
+                controller.navigateToTaskScreen(task);
+              },
                 child: SizedBox(
                   width: 180,
                   child: Container(
@@ -306,12 +298,14 @@ class HomeScreen extends GetView<HomeController> {
             child: const Icon(Icons.person),
           ),
         ),
-        Obx(() => Column(
+        Obx(() =>
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  '${controller.user.value.firstName} ${controller.user.value.lastName ?? ''}',
+                  '${controller.user.value.firstName} ${controller.user.value
+                      .lastName ?? ''}',
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
                 Row(
@@ -320,18 +314,19 @@ class HomeScreen extends GetView<HomeController> {
                   children: <Widget>[
                     const Icon(IconlyBold.location),
                     Obx(
-                      () => FittedBox(
-                        fit: BoxFit.fill,
-                        child: Text(
-                          controller.isloadingCurrentLocation.value
-                              ? 'Loading location'
-                              : controller.currentLocation.value,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20),
-                        ),
-                      ),
+                          () =>
+                          FittedBox(
+                            fit: BoxFit.fill,
+                            child: Text(
+                              controller.isloadingCurrentLocation.value
+                                  ? 'Loading location'
+                                  : controller.currentLocation.value,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20),
+                            ),
+                          ),
                     )
                   ],
                 ),

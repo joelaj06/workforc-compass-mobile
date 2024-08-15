@@ -9,6 +9,7 @@ import '../../../../../core/errors/failure.dart';
 import '../../../../../core/presentation/routes/app_routes.dart';
 import '../../../../../core/presentation/widgets/app_snacks.dart';
 import '../../../../../core/utils/shared_preferences_wrapper.dart';
+import '../../../../../core/utils/shared_prefs_keys.dart';
 import '../../../data/domain/usecase/login_user.dart';
 import '../../../data/models/request/login/login_request.dart';
 import '../../../data/models/response/user/user_model.dart';
@@ -59,14 +60,14 @@ class LoginController extends GetxController{
   void login(BuildContext context) async {
     // ignore: unawaited_futures
     isLoading(true);
-   /* final String token =
-    await _sharedPreferencesWrapper.getString(SharedPrefsKeys.fcmToken);*/
+    final String token =
+    await _sharedPreferencesWrapper.getString(SharedPrefsKeys.fcmToken);
 
     final Either<Failure, User> failureOrUser = await loginUser(
       LoginRequest(
           email: email.value,
           password: password.value,
-
+          deviceToken: token,
       ),
     );
     // ignore: unawaited_futures

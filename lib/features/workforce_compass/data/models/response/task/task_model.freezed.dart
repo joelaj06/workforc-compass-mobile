@@ -23,11 +23,15 @@ mixin _$Task {
   @JsonKey(name: '_id')
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  GeoLocation? get location => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   User? get assignee => throw _privateConstructorUsedError;
-  String? get startDate => throw _privateConstructorUsedError;
   User? get reviewer => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'due_date')
+  String? get dueDate => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_date')
+  String? get startDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,12 +46,15 @@ abstract class $TaskCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: '_id') String id,
       String title,
+      GeoLocation? location,
       String? description,
       User? assignee,
-      String? startDate,
       User? reviewer,
-      String? status});
+      String? status,
+      @JsonKey(name: 'due_date') String? dueDate,
+      @JsonKey(name: 'start_date') String? startDate});
 
+  $GeoLocationCopyWith<$Res>? get location;
   $UserCopyWith<$Res>? get assignee;
   $UserCopyWith<$Res>? get reviewer;
 }
@@ -67,11 +74,13 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
   $Res call({
     Object? id = null,
     Object? title = null,
+    Object? location = freezed,
     Object? description = freezed,
     Object? assignee = freezed,
-    Object? startDate = freezed,
     Object? reviewer = freezed,
     Object? status = freezed,
+    Object? dueDate = freezed,
+    Object? startDate = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -82,6 +91,10 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoLocation?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -90,10 +103,6 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as User?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as String?,
       reviewer: freezed == reviewer
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
@@ -102,7 +111,27 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
+      dueDate: freezed == dueDate
+          ? _value.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GeoLocationCopyWith<$Res>? get location {
+    if (_value.location == null) {
+      return null;
+    }
+
+    return $GeoLocationCopyWith<$Res>(_value.location!, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
   }
 
   @override
@@ -140,12 +169,16 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: '_id') String id,
       String title,
+      GeoLocation? location,
       String? description,
       User? assignee,
-      String? startDate,
       User? reviewer,
-      String? status});
+      String? status,
+      @JsonKey(name: 'due_date') String? dueDate,
+      @JsonKey(name: 'start_date') String? startDate});
 
+  @override
+  $GeoLocationCopyWith<$Res>? get location;
   @override
   $UserCopyWith<$Res>? get assignee;
   @override
@@ -164,11 +197,13 @@ class __$$TaskImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? title = null,
+    Object? location = freezed,
     Object? description = freezed,
     Object? assignee = freezed,
-    Object? startDate = freezed,
     Object? reviewer = freezed,
     Object? status = freezed,
+    Object? dueDate = freezed,
+    Object? startDate = freezed,
   }) {
     return _then(_$TaskImpl(
       id: null == id
@@ -179,6 +214,10 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as GeoLocation?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
@@ -187,10 +226,6 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
               as User?,
-      startDate: freezed == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as String?,
       reviewer: freezed == reviewer
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
@@ -198,6 +233,14 @@ class __$$TaskImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dueDate: freezed == dueDate
+          ? _value.dueDate
+          : dueDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      startDate: freezed == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -209,11 +252,13 @@ class _$TaskImpl extends _Task {
   const _$TaskImpl(
       {@JsonKey(name: '_id') required this.id,
       required this.title,
+      this.location,
       this.description,
       this.assignee,
-      this.startDate,
       this.reviewer,
-      required this.status})
+      required this.status,
+      @JsonKey(name: 'due_date') this.dueDate,
+      @JsonKey(name: 'start_date') this.startDate})
       : super._();
 
   factory _$TaskImpl.fromJson(Map<String, dynamic> json) =>
@@ -225,19 +270,25 @@ class _$TaskImpl extends _Task {
   @override
   final String title;
   @override
+  final GeoLocation? location;
+  @override
   final String? description;
   @override
   final User? assignee;
   @override
-  final String? startDate;
-  @override
   final User? reviewer;
   @override
   final String? status;
+  @override
+  @JsonKey(name: 'due_date')
+  final String? dueDate;
+  @override
+  @JsonKey(name: 'start_date')
+  final String? startDate;
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title, description: $description, assignee: $assignee, startDate: $startDate, reviewer: $reviewer, status: $status)';
+    return 'Task(id: $id, title: $title, location: $location, description: $description, assignee: $assignee, reviewer: $reviewer, status: $status, dueDate: $dueDate, startDate: $startDate)';
   }
 
   @override
@@ -247,21 +298,24 @@ class _$TaskImpl extends _Task {
             other is _$TaskImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.assignee, assignee) ||
                 other.assignee == assignee) &&
-            (identical(other.startDate, startDate) ||
-                other.startDate == startDate) &&
             (identical(other.reviewer, reviewer) ||
                 other.reviewer == reviewer) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.dueDate, dueDate) || other.dueDate == dueDate) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, description, assignee,
-      startDate, reviewer, status);
+  int get hashCode => Object.hash(runtimeType, id, title, location, description,
+      assignee, reviewer, status, dueDate, startDate);
 
   @JsonKey(ignore: true)
   @override
@@ -281,11 +335,13 @@ abstract class _Task extends Task {
   const factory _Task(
       {@JsonKey(name: '_id') required final String id,
       required final String title,
+      final GeoLocation? location,
       final String? description,
       final User? assignee,
-      final String? startDate,
       final User? reviewer,
-      required final String? status}) = _$TaskImpl;
+      required final String? status,
+      @JsonKey(name: 'due_date') final String? dueDate,
+      @JsonKey(name: 'start_date') final String? startDate}) = _$TaskImpl;
   const _Task._() : super._();
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$TaskImpl.fromJson;
@@ -296,15 +352,21 @@ abstract class _Task extends Task {
   @override
   String get title;
   @override
+  GeoLocation? get location;
+  @override
   String? get description;
   @override
   User? get assignee;
   @override
-  String? get startDate;
-  @override
   User? get reviewer;
   @override
   String? get status;
+  @override
+  @JsonKey(name: 'due_date')
+  String? get dueDate;
+  @override
+  @JsonKey(name: 'start_date')
+  String? get startDate;
   @override
   @JsonKey(ignore: true)
   _$$TaskImplCopyWith<_$TaskImpl> get copyWith =>

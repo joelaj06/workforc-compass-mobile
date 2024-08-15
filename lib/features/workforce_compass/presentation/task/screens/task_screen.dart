@@ -1,9 +1,14 @@
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:iconly/iconly.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:work_compass/core/presentation/theme/app_theme.dart';
+import 'package:work_compass/features/workforce_compass/presentation/task/arguments/task_argument.dart';
 import 'package:work_compass/features/workforce_compass/presentation/task/getx/task_controller.dart';
 
 import '../../../../../core/presentation/theme/primary_color.dart';
@@ -11,112 +16,303 @@ import '../../../../../core/presentation/utils/app_assets_svg.dart';
 import '../../../../../core/presentation/utils/app_padding.dart';
 import '../../../../../core/presentation/utils/app_spacing.dart';
 import '../../../../../core/presentation/widgets/animated_column.dart';
+import '../../../../../core/utils/data_formatter.dart';
+import '../../../data/models/response/task/task_model.dart';
+
 class TaskScreen extends GetView<TaskController> {
   const TaskScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    controller.getCurrentLocation();
+    final TaskArgument? args =
+        ModalRoute.of(context)?.settings.arguments as TaskArgument?;
+    // controller.getCurrentLocation();
     return Scaffold(
       appBar: AppBar(
-        title:  const Text('Check In'),
+        title: const Text('Check In'),
       ),
-      body: Center(
-        child: AppAnimatedColumn(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Obx(() => Text(
-              controller.currentTime.value,
-              style: const TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w500,
-              ),
-            )),
-            Obx(() => Text(
-              controller.currentDate.value,
-              style: const TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16
-              ),
-            )),
-            const AppSpacing(
-              v: 40,
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: AvatarGlow(
-                glowRadiusFactor: 0.1,
-                startDelay: const Duration(seconds: 5),
-                glowColor: context.colors.primary,
-                glowShape: BoxShape.circle,
+      body: PageView(
+        controller: controller.pageController,
+        onPageChanged: controller.onPageIndexChanged,
+        physics: const NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          _buildCheckPage(args, context),
+          _buildMapPage(context, args!.task),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMapPage(BuildContext context, Task task) {
+    return Obx(
+      () => GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
+          zoom: 15,
+        ),
+        onMapCreated: (GoogleMapController mapController) {
+          controller.googleMapController = mapController;
+          controller.addMarker(
+            'source',
+            LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
+          );
+          controller.addMarker(
+            'dest',
+            LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
+          );
+          controller.addCircle(
+              'dest',
+              LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
+              double.parse(
+                  (task.location?.radius.toString() ?? 500).toString()));
+        },
+        markers: controller.markers.values.toSet(),
+        circles: controller.circles.values.toSet(),
+      ),
+    );
+  }
+
+  Padding _buildCheckPage(TaskArgument? args, BuildContext context) {
+    return Padding(
+      padding: AppPaddings.mA,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          AppAnimatedColumn(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  args?.task.title ?? 'No Title',
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    showCupertinoModalBottomSheet<dynamic>(
+                      expand: false,
+                      context: context,
+                      builder: (BuildContext context) => SizedBox(
+                          height: 300,
+                          child: _buildDescriptionModal(args!.task)),
+                    );
+                  },
+                  child: Text(
+                    args?.task.description ?? 'No Description',
+                    textAlign: TextAlign.left,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const AppSpacing(
+                  v: 30,
+                ),
+                _buildCheckButton(context),
+                const AppSpacing(
+                  v: 20,
+                ),
+                _buildAttendanceInfo(),
+                const AppSpacing(
+                  v: 10,
+                ),
+                _buildTaskDetailCard(
+                  context,
+                  'Start Date',
+                  DataFormatter.formatDateToString(
+                      args?.task.startDate ?? '--'),
+                  IconlyBold.calendar,
+                ),
+                _buildTaskDetailCard(
+                  context,
+                  'End Date',
+                  DataFormatter.formatDateToString(args?.task.dueDate ?? '--'),
+                  IconlyBold.calendar,
+                ),
+                _buildLocationCard(context, args),
+              ]),
+          Flexible(
+            child: Padding(
+              padding: AppPaddings.lA,
+              child: GestureDetector(
+                onTap: () => controller.navigatePages(1),
                 child: Container(
-                  padding: const EdgeInsets.all(50),
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: context.colors.primary.shade50,
-                      width: 15,
-                    ),
-                    shape: BoxShape.circle,
-                    color: context.colors.primary.shade400,
-                    //  borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: context.colors.primary, width: 2),
+                    borderRadius: BorderRadius.circular(20),
+                    color: context.colors.primary.shade200,
                   ),
                   child: const Center(
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.touch_app_outlined,
+                    child: Text('View Location On Map',
+                        style: TextStyle(
                           color: Colors.white,
-                          size: 100,
-                        ),
-                        Text(
-                          'CLOCK IN',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
+                        )),
                   ),
                 ),
               ),
             ),
-            const AppSpacing(
-              v: 20,
+          )
+        ],
+      ),
+    );
+  }
+
+  Padding _buildAttendanceInfo() {
+    return Padding(
+      padding: AppPaddings.lA.add(AppPaddings.bodyH),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          _buildCheckCard(
+              title: 'Clock In', icon: AssetSVGs.clockDown, time: '--'),
+          _buildCheckCard(
+              title: 'Clock Out', icon: AssetSVGs.clockUp, time: '--'),
+          _buildCheckCard(
+              title: 'Working Hrs', icon: AssetSVGs.clockCheck, time: '--'),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector _buildCheckButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: AvatarGlow(
+        glowRadiusFactor: 0.1,
+        startDelay: const Duration(seconds: 5),
+        glowColor: context.colors.primary,
+        glowShape: BoxShape.circle,
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: context.colors.primary.shade50,
+              width: 15,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+            shape: BoxShape.circle,
+            color: context.colors.primary.shade400,
+          ),
+          child: const Center(
+            child: Column(
               children: <Widget>[
-                const Icon(IconlyBold.location),
-                Obx(
-                      () => Text(controller.isloadingCurrentLocation.value
-                      ? 'Loading location'
-                      : controller.currentLocation.value),
+                Icon(
+                  Icons.touch_app_outlined,
+                  color: Colors.white,
+                  size: 100,
+                ),
+                Text(
+                  'CLOCK IN',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 )
               ],
             ),
-            Padding(
-              padding:
-              AppPaddings.lH.add(AppPaddings.lH).add(AppPaddings.bodyA),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  _buildCheckCard(
-                      title: 'Clock In', icon: AssetSVGs.clockDown, time: '--'),
-                  _buildCheckCard(
-                      title: 'Clock Out', icon: AssetSVGs.clockUp, time: '--'),
-                  _buildCheckCard(
-                      title: 'Working Hrs',
-                      icon: AssetSVGs.clockCheck,
-                      time: '--'),
-                ],
-              ),
-            )
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column _buildLocationCard(BuildContext context, TaskArgument? args) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                const Icon(IconlyBold.location),
+                const AppSpacing(
+                  h: 10,
+                ),
+                Text('Location',
+                    style: context.body2.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.w400))
+              ],
+            ),
+            FutureBuilder<String>(
+                future: controller.getPlaceMarkFromCoordinates(
+                  args!.task.location?.lat ?? 0,
+                  args.task.location?.long ?? 0,
+                ),
+                builder:
+                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  return snapshot.hasData
+                      ? Text(
+                          snapshot.data!,
+                          style: context.body2.copyWith(
+                              color: Colors.black, fontWeight: FontWeight.w600),
+                        )
+                      : const Text(
+                          'Loading Location...',
+                        );
+                })
           ],
         ),
+        const AppSpacing(
+          v: 8,
+        ),
+        const Divider(),
+      ],
+    );
+  }
+
+  Widget _buildTaskDetailCard(
+      BuildContext context, String title, String value, IconData icon) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(icon),
+                const AppSpacing(
+                  h: 10,
+                ),
+                Text(title,
+                    style: context.body2.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.w400))
+              ],
+            ),
+            Text(
+              value.toString(),
+              style: context.body2
+                  .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
+        const AppSpacing(
+          v: 8,
+        ),
+        const Divider(),
+      ],
+    );
+  }
+
+  Widget _buildDescriptionModal(Task task) {
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          const Center(
+            child: Text(
+              'Description',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Text(
+            task.description ?? '...',
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -130,7 +326,7 @@ class TaskScreen extends GetView<TaskController> {
           height: 40,
           width: 40,
           colorFilter:
-          const ColorFilter.mode(PrimaryColor.color, BlendMode.srcIn),
+              const ColorFilter.mode(PrimaryColor.color, BlendMode.srcIn),
           semanticsLabel: title,
         ),
         Text(

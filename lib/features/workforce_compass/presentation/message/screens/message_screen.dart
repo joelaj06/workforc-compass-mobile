@@ -80,17 +80,6 @@ class MessageScreen extends GetView<MessageController> {
           SizedBox(
             child: Container(
               decoration: BoxDecoration(
-                  /*boxShadow: const <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.black12,
-                      // Shadow color
-                      offset: Offset(0, 2),
-                      // Position the shadow above the container
-                      blurRadius: 1,
-                      // Spread of the shadow
-                      spreadRadius: 1, // Spread of the shadow
-                    ),
-                  ],*/
                   color: isUser
                       ? Theme.of(context).primaryColor
                       : Colors.grey.shade300.withOpacity(0.5),
@@ -124,7 +113,7 @@ class MessageScreen extends GetView<MessageController> {
                 ),
                 style: TextStyle(
                   fontSize: 12,
-                  color: HintColor.color.shade200,
+                  color: HintColor.color.shade400,
                 ),
               ),
               Builder(builder: (BuildContext context) {

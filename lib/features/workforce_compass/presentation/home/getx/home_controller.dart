@@ -15,6 +15,7 @@ import 'package:work_compass/features/workforce_compass/data/datasources/locatio
 import 'package:work_compass/features/workforce_compass/data/models/response/organization/organization_model.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/organization/fetch_organization.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/task/fetchUserTasks.dart';
+import 'package:work_compass/features/workforce_compass/presentation/task/arguments/task_argument.dart';
 
 import '../../../../authentication/data/models/response/login/login_response.dart';
 import '../../../data/models/response/task/task_model.dart';
@@ -71,8 +72,8 @@ class HomeController extends GetxController {
     getUserTasks();
   }
 
-  void navigateToTaskScreen() {
-    Get.toNamed<dynamic>(AppRoutes.task);
+  void navigateToTaskScreen(Task task) {
+    Get.toNamed<dynamic>(AppRoutes.task, arguments: TaskArgument(task));
   }
 
   void getUserTasks() async {

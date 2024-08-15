@@ -8,8 +8,9 @@ part 'geolocation_model.g.dart';
 @freezed
 class GeoLocation with _$GeoLocation {
   const factory GeoLocation({
-   required String long,
-    required String lat,
+   required double long,
+    required double lat,
+    int? radius,
   }) = _GeoLocation;
 
   const GeoLocation._();
@@ -18,7 +19,7 @@ class GeoLocation with _$GeoLocation {
       _$GeoLocationFromJson(json);
 
   factory GeoLocation.empty() =>  const GeoLocation(
-    long: '',
-    lat: '',
+    long: 0,
+    lat:0,
   );
 }
