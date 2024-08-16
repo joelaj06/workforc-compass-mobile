@@ -26,10 +26,20 @@ class TaskScreen extends GetView<TaskController> {
   Widget build(BuildContext context) {
     final TaskArgument? args =
         ModalRoute.of(context)?.settings.arguments as TaskArgument?;
+    if(args != null) {
+      controller.task(args.task);
+    }
     // controller.getCurrentLocation();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Check In'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.navigatePages(1);
+        },
+        child: const Icon(Icons.navigation_rounded),
+
       ),
       body: PageView(
         controller: controller.pageController,
@@ -44,6 +54,7 @@ class TaskScreen extends GetView<TaskController> {
   }
 
   Widget _buildMapPage(BuildContext context, Task task) {
+    print(controller.polylines);
     return Obx(
       () => GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -51,15 +62,18 @@ class TaskScreen extends GetView<TaskController> {
           zoom: 15,
         ),
         onMapCreated: (GoogleMapController mapController) {
-          controller.googleMapController = mapController;
+          controller.googleMapController.complete(mapController);
           controller.addMarker(
-            'source',
-            LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
+            'currentLocation',
+           controller.currentPosition.value,
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
           );
           controller.addMarker(
-            'dest',
+            'destination',
             LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
+             null
           );
+
           controller.addCircle(
               'dest',
               LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
@@ -68,11 +82,12 @@ class TaskScreen extends GetView<TaskController> {
         },
         markers: controller.markers.values.toSet(),
         circles: controller.circles.values.toSet(),
+        polylines: controller.polylines.values.toSet(),
       ),
     );
   }
 
-  Padding _buildCheckPage(TaskArgument? args, BuildContext context) {
+  Widget _buildCheckPage(TaskArgument? args, BuildContext context) {
     return Padding(
       padding: AppPaddings.mA,
       child: Column(

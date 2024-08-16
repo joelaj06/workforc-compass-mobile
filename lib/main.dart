@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:logging/logging.dart';
 import 'package:work_compass/core/presentation/app/work_compass.dart';
 
@@ -28,6 +29,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FlutterConfig.loadEnvVariables();
+
 
   final GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
 

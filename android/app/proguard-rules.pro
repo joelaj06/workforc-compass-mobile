@@ -1,0 +1,1 @@
+-keep class com.example.work_compass.BuildConfig { *; }

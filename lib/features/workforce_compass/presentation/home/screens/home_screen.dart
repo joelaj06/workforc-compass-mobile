@@ -75,11 +75,11 @@ class HomeScreen extends GetView<HomeController> {
             'All your work & projects at one \n place',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 20,
             ),
           ),
           const AppSpacing(
-            v: 20,
+            v: 10,
           ),
           AppTextInputField(
             suffixIcon: const Icon(
@@ -229,7 +229,7 @@ class HomeScreen extends GetView<HomeController> {
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: context.colors.primary, width: 2)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             ClipRRect(
