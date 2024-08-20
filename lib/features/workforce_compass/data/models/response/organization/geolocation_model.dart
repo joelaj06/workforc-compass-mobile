@@ -10,6 +10,7 @@ class GeoLocation with _$GeoLocation {
   const factory GeoLocation({
    required double long,
     required double lat,
+    String? address,
     int? radius,
   }) = _GeoLocation;
 

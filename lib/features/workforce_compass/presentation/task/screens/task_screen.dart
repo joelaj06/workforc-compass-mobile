@@ -25,24 +25,24 @@ class TaskScreen extends GetView<TaskController> {
     controller.pageIndex(0);
     final TaskArgument? args =
         ModalRoute.of(context)?.settings.arguments as TaskArgument?;
-    if(args != null) {
+    if (args != null) {
       controller.task(args.task);
     }
     // controller.getCurrentLocation();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Check In'),
-        leading:  Builder(
+        leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
               onPressed: () {
                 if (controller.pageIndex.value == 0) {
                   Navigator.of(context).maybePop();
                 } else {
-                    controller.pageController.previousPage(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.linear,
-                    );
+                  controller.pageController.previousPage(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.linear,
+                  );
                 }
               },
               icon: const Icon(Icons.arrow_back),
@@ -55,7 +55,6 @@ class TaskScreen extends GetView<TaskController> {
           controller.navigatePages(1);
         },
         child: const Icon(Icons.navigation_rounded),
-
       ),
       body: PageView(
         controller: controller.pageController,
@@ -80,14 +79,11 @@ class TaskScreen extends GetView<TaskController> {
           controller.googleMapController.complete(mapController);
           controller.addMarker(
             'currentLocation',
-           controller.currentPosition.value,
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
+            controller.currentPosition.value,
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
           );
-          controller.addMarker(
-            'destination',
-            LatLng(task.location?.lat ?? 0, task.location?.long ?? 0),
-             null
-          );
+          controller.addMarker('destination',
+              LatLng(task.location?.lat ?? 0, task.location?.long ?? 0), null);
 
           controller.addCircle(
               'dest',
@@ -208,36 +204,44 @@ class TaskScreen extends GetView<TaskController> {
   GestureDetector _buildCheckButton(BuildContext context) {
     return GestureDetector(
       onTap: controller.checkInOrOut,
-      child: AvatarGlow(
-        glowRadiusFactor: 0.1,
-        startDelay: const Duration(seconds: 5),
-        glowColor: context.colors.primary,
-        glowShape: BoxShape.circle,
-        child: Container(
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: context.colors.primary.shade50,
-              width: 15,
+      child: Obx(
+        () => AvatarGlow(
+          glowRadiusFactor: 0.1,
+          startDelay: const Duration(seconds: 5),
+          glowColor: controller.hasCheckedIn.value
+              ? context.colors.secondary
+              : context.colors.primary,
+          glowShape: BoxShape.circle,
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: controller.hasCheckedIn.value
+                    ? context.colors.secondary.shade50
+                    : context.colors.primary.shade50,
+                width: 15,
+              ),
+              shape: BoxShape.circle,
+              color: controller.hasCheckedIn.value
+                  ? context.colors.secondary.shade400
+                  : context.colors.primary.shade400,
             ),
-            shape: BoxShape.circle,
-            color: context.colors.primary.shade400,
-          ),
-          child: const Center(
-            child: Column(
-              children: <Widget>[
-                Icon(
-                  Icons.touch_app_outlined,
-                  color: Colors.white,
-                  size: 100,
-                ),
-                Text(
-                  'CLOCK IN',
-                  style: TextStyle(
+            child: const Center(
+              child: Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.touch_app_outlined,
                     color: Colors.white,
+                    size: 100,
                   ),
-                )
-              ],
+                  Text(
+                    'CLOCK IN',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

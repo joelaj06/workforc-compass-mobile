@@ -27,6 +27,8 @@ mixin _$AttendanceRequest {
   @JsonKey(name: 'check_out')
   String? get checkout => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  bool? get isCheckedIn => throw _privateConstructorUsedError;
+  String get taskId => throw _privateConstructorUsedError;
   String? get completed => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
 
@@ -47,6 +49,8 @@ abstract class $AttendanceRequestCopyWith<$Res> {
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
+      bool? isCheckedIn,
+      String taskId,
       String? completed,
       String? createdAt});
 }
@@ -68,6 +72,8 @@ class _$AttendanceRequestCopyWithImpl<$Res, $Val extends AttendanceRequest>
     Object? checkIn = freezed,
     Object? checkout = freezed,
     Object? location = freezed,
+    Object? isCheckedIn = freezed,
+    Object? taskId = null,
     Object? completed = freezed,
     Object? createdAt = freezed,
   }) {
@@ -88,6 +94,14 @@ class _$AttendanceRequestCopyWithImpl<$Res, $Val extends AttendanceRequest>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      isCheckedIn: freezed == isCheckedIn
+          ? _value.isCheckedIn
+          : isCheckedIn // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      taskId: null == taskId
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as String,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -113,6 +127,8 @@ abstract class _$$AttendanceRequestImplCopyWith<$Res>
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
+      bool? isCheckedIn,
+      String taskId,
       String? completed,
       String? createdAt});
 }
@@ -132,6 +148,8 @@ class __$$AttendanceRequestImplCopyWithImpl<$Res>
     Object? checkIn = freezed,
     Object? checkout = freezed,
     Object? location = freezed,
+    Object? isCheckedIn = freezed,
+    Object? taskId = null,
     Object? completed = freezed,
     Object? createdAt = freezed,
   }) {
@@ -152,6 +170,14 @@ class __$$AttendanceRequestImplCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      isCheckedIn: freezed == isCheckedIn
+          ? _value.isCheckedIn
+          : isCheckedIn // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      taskId: null == taskId
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as String,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -172,6 +198,8 @@ class _$AttendanceRequestImpl extends _AttendanceRequest {
       @JsonKey(name: 'check_in') this.checkIn,
       @JsonKey(name: 'check_out') this.checkout,
       this.location,
+      this.isCheckedIn,
+      required this.taskId,
       this.completed,
       this.createdAt})
       : super._();
@@ -191,13 +219,17 @@ class _$AttendanceRequestImpl extends _AttendanceRequest {
   @override
   final String? location;
   @override
+  final bool? isCheckedIn;
+  @override
+  final String taskId;
+  @override
   final String? completed;
   @override
   final String? createdAt;
 
   @override
   String toString() {
-    return 'AttendanceRequest(id: $id, checkIn: $checkIn, checkout: $checkout, location: $location, completed: $completed, createdAt: $createdAt)';
+    return 'AttendanceRequest(id: $id, checkIn: $checkIn, checkout: $checkout, location: $location, isCheckedIn: $isCheckedIn, taskId: $taskId, completed: $completed, createdAt: $createdAt)';
   }
 
   @override
@@ -211,6 +243,9 @@ class _$AttendanceRequestImpl extends _AttendanceRequest {
                 other.checkout == checkout) &&
             (identical(other.location, location) ||
                 other.location == location) &&
+            (identical(other.isCheckedIn, isCheckedIn) ||
+                other.isCheckedIn == isCheckedIn) &&
+            (identical(other.taskId, taskId) || other.taskId == taskId) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(other.createdAt, createdAt) ||
@@ -219,8 +254,8 @@ class _$AttendanceRequestImpl extends _AttendanceRequest {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, checkIn, checkout, location, completed, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, checkIn, checkout, location,
+      isCheckedIn, taskId, completed, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -243,6 +278,8 @@ abstract class _AttendanceRequest extends AttendanceRequest {
       @JsonKey(name: 'check_in') final String? checkIn,
       @JsonKey(name: 'check_out') final String? checkout,
       final String? location,
+      final bool? isCheckedIn,
+      required final String taskId,
       final String? completed,
       final String? createdAt}) = _$AttendanceRequestImpl;
   const _AttendanceRequest._() : super._();
@@ -261,6 +298,10 @@ abstract class _AttendanceRequest extends AttendanceRequest {
   String? get checkout;
   @override
   String? get location;
+  @override
+  bool? get isCheckedIn;
+  @override
+  String get taskId;
   @override
   String? get completed;
   @override

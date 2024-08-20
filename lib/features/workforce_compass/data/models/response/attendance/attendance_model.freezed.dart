@@ -29,6 +29,7 @@ mixin _$Attendance {
   @JsonKey(name: 'check_out')
   String? get checkout => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  bool? get hasCheckedIn => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $AttendanceCopyWith<$Res> {
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
+      bool? hasCheckedIn,
       bool? completed,
       String? createdAt});
 }
@@ -72,6 +74,7 @@ class _$AttendanceCopyWithImpl<$Res, $Val extends Attendance>
     Object? checkIn = freezed,
     Object? checkout = freezed,
     Object? location = freezed,
+    Object? hasCheckedIn = freezed,
     Object? completed = freezed,
     Object? createdAt = freezed,
   }) {
@@ -96,6 +99,10 @@ class _$AttendanceCopyWithImpl<$Res, $Val extends Attendance>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasCheckedIn: freezed == hasCheckedIn
+          ? _value.hasCheckedIn
+          : hasCheckedIn // ignore: cast_nullable_to_non_nullable
+              as bool?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -122,6 +129,7 @@ abstract class _$$AttendanceImplCopyWith<$Res>
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
+      bool? hasCheckedIn,
       bool? completed,
       String? createdAt});
 }
@@ -142,6 +150,7 @@ class __$$AttendanceImplCopyWithImpl<$Res>
     Object? checkIn = freezed,
     Object? checkout = freezed,
     Object? location = freezed,
+    Object? hasCheckedIn = freezed,
     Object? completed = freezed,
     Object? createdAt = freezed,
   }) {
@@ -166,6 +175,10 @@ class __$$AttendanceImplCopyWithImpl<$Res>
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
               as String?,
+      hasCheckedIn: freezed == hasCheckedIn
+          ? _value.hasCheckedIn
+          : hasCheckedIn // ignore: cast_nullable_to_non_nullable
+              as bool?,
       completed: freezed == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -187,6 +200,7 @@ class _$AttendanceImpl extends _Attendance {
       @JsonKey(name: 'check_in') this.checkIn,
       @JsonKey(name: 'check_out') this.checkout,
       this.location,
+      this.hasCheckedIn,
       this.completed,
       this.createdAt})
       : super._();
@@ -209,13 +223,15 @@ class _$AttendanceImpl extends _Attendance {
   @override
   final String? location;
   @override
+  final bool? hasCheckedIn;
+  @override
   final bool? completed;
   @override
   final String? createdAt;
 
   @override
   String toString() {
-    return 'Attendance(id: $id, startDate: $startDate, checkIn: $checkIn, checkout: $checkout, location: $location, completed: $completed, createdAt: $createdAt)';
+    return 'Attendance(id: $id, startDate: $startDate, checkIn: $checkIn, checkout: $checkout, location: $location, hasCheckedIn: $hasCheckedIn, completed: $completed, createdAt: $createdAt)';
   }
 
   @override
@@ -231,6 +247,8 @@ class _$AttendanceImpl extends _Attendance {
                 other.checkout == checkout) &&
             (identical(other.location, location) ||
                 other.location == location) &&
+            (identical(other.hasCheckedIn, hasCheckedIn) ||
+                other.hasCheckedIn == hasCheckedIn) &&
             (identical(other.completed, completed) ||
                 other.completed == completed) &&
             (identical(other.createdAt, createdAt) ||
@@ -240,7 +258,7 @@ class _$AttendanceImpl extends _Attendance {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, startDate, checkIn, checkout,
-      location, completed, createdAt);
+      location, hasCheckedIn, completed, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -263,6 +281,7 @@ abstract class _Attendance extends Attendance {
       @JsonKey(name: 'check_in') final String? checkIn,
       @JsonKey(name: 'check_out') final String? checkout,
       final String? location,
+      final bool? hasCheckedIn,
       final bool? completed,
       final String? createdAt}) = _$AttendanceImpl;
   const _Attendance._() : super._();
@@ -284,6 +303,8 @@ abstract class _Attendance extends Attendance {
   String? get checkout;
   @override
   String? get location;
+  @override
+  bool? get hasCheckedIn;
   @override
   bool? get completed;
   @override

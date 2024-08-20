@@ -5,7 +5,7 @@ abstract class ThemeColor {
   MaterialColor get primary;
   MaterialColor get accent;
   MaterialColor get hint;
-  Color get secondary;
+  MaterialColor get secondary;
 
   Color get success;
   Color get error;

@@ -22,6 +22,7 @@ GeoLocation _$GeoLocationFromJson(Map<String, dynamic> json) {
 mixin _$GeoLocation {
   double get long => throw _privateConstructorUsedError;
   double get lat => throw _privateConstructorUsedError;
+  String? get address => throw _privateConstructorUsedError;
   int? get radius => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,7 @@ abstract class $GeoLocationCopyWith<$Res> {
           GeoLocation value, $Res Function(GeoLocation) then) =
       _$GeoLocationCopyWithImpl<$Res, GeoLocation>;
   @useResult
-  $Res call({double long, double lat, int? radius});
+  $Res call({double long, double lat, String? address, int? radius});
 }
 
 /// @nodoc
@@ -54,6 +55,7 @@ class _$GeoLocationCopyWithImpl<$Res, $Val extends GeoLocation>
   $Res call({
     Object? long = null,
     Object? lat = null,
+    Object? address = freezed,
     Object? radius = freezed,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +67,10 @@ class _$GeoLocationCopyWithImpl<$Res, $Val extends GeoLocation>
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
       radius: freezed == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
@@ -81,7 +87,7 @@ abstract class _$$GeoLocationImplCopyWith<$Res>
       __$$GeoLocationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double long, double lat, int? radius});
+  $Res call({double long, double lat, String? address, int? radius});
 }
 
 /// @nodoc
@@ -97,6 +103,7 @@ class __$$GeoLocationImplCopyWithImpl<$Res>
   $Res call({
     Object? long = null,
     Object? lat = null,
+    Object? address = freezed,
     Object? radius = freezed,
   }) {
     return _then(_$GeoLocationImpl(
@@ -108,6 +115,10 @@ class __$$GeoLocationImplCopyWithImpl<$Res>
           ? _value.lat
           : lat // ignore: cast_nullable_to_non_nullable
               as double,
+      address: freezed == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String?,
       radius: freezed == radius
           ? _value.radius
           : radius // ignore: cast_nullable_to_non_nullable
@@ -119,7 +130,8 @@ class __$$GeoLocationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$GeoLocationImpl extends _GeoLocation {
-  const _$GeoLocationImpl({required this.long, required this.lat, this.radius})
+  const _$GeoLocationImpl(
+      {required this.long, required this.lat, this.address, this.radius})
       : super._();
 
   factory _$GeoLocationImpl.fromJson(Map<String, dynamic> json) =>
@@ -130,11 +142,13 @@ class _$GeoLocationImpl extends _GeoLocation {
   @override
   final double lat;
   @override
+  final String? address;
+  @override
   final int? radius;
 
   @override
   String toString() {
-    return 'GeoLocation(long: $long, lat: $lat, radius: $radius)';
+    return 'GeoLocation(long: $long, lat: $lat, address: $address, radius: $radius)';
   }
 
   @override
@@ -144,12 +158,13 @@ class _$GeoLocationImpl extends _GeoLocation {
             other is _$GeoLocationImpl &&
             (identical(other.long, long) || other.long == long) &&
             (identical(other.lat, lat) || other.lat == lat) &&
+            (identical(other.address, address) || other.address == address) &&
             (identical(other.radius, radius) || other.radius == radius));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, long, lat, radius);
+  int get hashCode => Object.hash(runtimeType, long, lat, address, radius);
 
   @JsonKey(ignore: true)
   @override
@@ -169,6 +184,7 @@ abstract class _GeoLocation extends GeoLocation {
   const factory _GeoLocation(
       {required final double long,
       required final double lat,
+      final String? address,
       final int? radius}) = _$GeoLocationImpl;
   const _GeoLocation._() : super._();
 
@@ -179,6 +195,8 @@ abstract class _GeoLocation extends GeoLocation {
   double get long;
   @override
   double get lat;
+  @override
+  String? get address;
   @override
   int? get radius;
   @override

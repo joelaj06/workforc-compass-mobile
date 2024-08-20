@@ -16,7 +16,7 @@ class AppLightTheme implements ThemeColor {
   @override
   Color success = const Color(0xFF0FC578);
   @override
-  Color secondary =  SecondaryColor.color;
+  MaterialColor secondary =  SecondaryColor.color;
   @override
   Color error = const Color(0xFFD20000);
 

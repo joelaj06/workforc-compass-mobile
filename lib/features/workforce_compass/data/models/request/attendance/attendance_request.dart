@@ -12,6 +12,8 @@ class AttendanceRequest with _$AttendanceRequest {
     @JsonKey(name: 'check_in') String? checkIn,
     @JsonKey(name: 'check_out') String? checkout,
     String? location,
+    bool? isCheckedIn,
+    required String taskId,
     String? completed,
     String? createdAt,
   }) = _AttendanceRequest;

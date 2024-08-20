@@ -13,6 +13,8 @@ _$AttendanceRequestImpl _$$AttendanceRequestImplFromJson(
       checkIn: json['check_in'] as String?,
       checkout: json['check_out'] as String?,
       location: json['location'] as String?,
+      isCheckedIn: json['isCheckedIn'] as bool?,
+      taskId: json['taskId'] as String,
       completed: json['completed'] as String?,
       createdAt: json['createdAt'] as String?,
     );
@@ -24,6 +26,8 @@ Map<String, dynamic> _$$AttendanceRequestImplToJson(
       'check_in': instance.checkIn,
       'check_out': instance.checkout,
       'location': instance.location,
+      'isCheckedIn': instance.isCheckedIn,
+      'taskId': instance.taskId,
       'completed': instance.completed,
       'createdAt': instance.createdAt,
     };

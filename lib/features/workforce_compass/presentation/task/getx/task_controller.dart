@@ -1,17 +1,20 @@
 import 'dart:async';
 
+import 'package:dartz/dartz.dart' hide Task;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:work_compass/core/errors/errors.dart';
 import 'package:work_compass/core/presentation/theme/primary_color.dart';
 import 'package:work_compass/core/presentation/utils/app_snack.dart';
 import 'package:work_compass/core/utils/location.dart';
+import 'package:work_compass/features/workforce_compass/data/models/request/attendance/attendance_request.dart';
+import 'package:work_compass/features/workforce_compass/data/models/response/attendance/attendance_model.dart';
 import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_in.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_out.dart';
@@ -23,7 +26,6 @@ class TaskController extends GetxController {
 
   final UserCheckIn userCheckIn;
   final UserCheckOut userCheckOut;
-
 
   RxString currentDate = ''.obs;
   RxString currentTime = ''.obs;
@@ -44,12 +46,14 @@ class TaskController extends GetxController {
   Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();
   RxBool notifiedUser = false.obs;
+  RxBool hasCheckedIn = false.obs;
 
   Location location = Location();
 
   @override
   void onInit() {
     isLoaded = false;
+    isCheckedIn();
     getLocationUpdate();
     super.onInit();
   }
@@ -60,13 +64,83 @@ class TaskController extends GetxController {
     super.onClose();
   }
 
+  void isCheckedIn() async {
+    final Either<Failure, Attendance> checkInUser = await userCheckIn(
+      AttendanceRequest(
+        taskId: task.value.id,
+        location: task.value.location?.address,
+        isCheckedIn: true,
+      ),
+    );
 
+    checkInUser.fold((Failure failure) {
+      AppSnack.show(
+        title: 'Task',
+        message: failure.message,
+        status: SnackStatus.error,
+      );
+    }, (Attendance attendance) {
+      hasCheckedIn(attendance.hasCheckedIn);
+    });
+  }
+
+  void checkOut() async {
+    final Either<Failure, Attendance> checkOutUser = await userCheckOut(
+      AttendanceRequest(
+        taskId: task.value.id,
+        location: task.value.location?.address,
+      ),
+    );
+
+    checkOutUser.fold((Failure failure) {
+      AppSnack.show(
+        title: 'Task',
+        message: failure.message,
+        status: SnackStatus.error,
+      );
+    }, (Attendance attendance) {
+      AppSnack.show(
+        title: 'Task',
+        message: 'Check Out Successful',
+        status: SnackStatus.success,
+      );
+    });
+  }
+
+  void checkIn() async {
+    final Either<Failure, Attendance> checkInUser = await userCheckIn(
+      AttendanceRequest(
+        taskId: task.value.id,
+        location: task.value.location?.address,
+      ),
+    );
+
+    checkInUser.fold((Failure failure) {
+      AppSnack.show(
+        title: 'Task',
+        message: failure.message,
+        status: SnackStatus.error,
+      );
+    }, (Attendance attendance) {
+      hasCheckedIn(attendance.hasCheckedIn);
+      AppSnack.show(
+        title: 'Task',
+        message: 'Check In Successful',
+        status: SnackStatus.success,
+      );
+    });
+  }
 
   void checkInOrOut() {
     //check if user is within the geofence
     if (task.value.location?.radius != null) {
       if (distance.value < task.value.location!.radius!) {
         //proceed with check in process
+        if (hasCheckedIn.value) {
+          checkOut();
+        } else {
+          checkIn();
+        }
       } else {
         //show notification
         AppSnack.show(
@@ -237,7 +311,7 @@ class TaskController extends GetxController {
     );
   }
 
- /* void getCurrentLocation() async {
+  /* void getCurrentLocation() async {
     isloadingCurrentLocation(true);
     final Position position = await locationService.determinePosition();
     final List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -258,7 +332,7 @@ class TaskController extends GetxController {
     return '${place.street} - ${place.locality}, ${place.country}';
   }
 
- /* void runCurrentTime() {
+/* void runCurrentTime() {
     Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       final String formattedDate =
           DateFormat('EEEE, MMM d').format(DateTime.now());

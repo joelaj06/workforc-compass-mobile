@@ -13,6 +13,7 @@ class Attendance with _$Attendance {
     @JsonKey(name: 'check_in') String? checkIn,
     @JsonKey(name: 'check_out') String? checkout,
     String? location,
+    bool? hasCheckedIn,
     bool? completed,
     String? createdAt,
   }) = _Attendance;
