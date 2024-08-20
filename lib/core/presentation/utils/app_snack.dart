@@ -13,7 +13,7 @@ class AppSnack {
       GetSnackBar(
         title: title,
         message: message,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 3000),
         icon: Icon(
           status == null
               ? Ionicons.checkmark_done_circle_outline

@@ -45,6 +45,10 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSMotionUsageDescription</key>
+    <string>Used to recognize user activity information.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Used to provide geofence service.</string>
 	<string>NSLocationWhenInUseUsageDescription</string>
     <key>Want to display location on map, and track it</key>
     <string>NSLocationAlwaysUsageDescription</string>

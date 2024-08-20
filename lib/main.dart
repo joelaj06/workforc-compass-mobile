@@ -32,7 +32,6 @@ void main() async {
 
   await FlutterConfig.loadEnvVariables();
 
-
   final GlobalKey<NavigatorState> navigator = GlobalKey<NavigatorState>();
 
 

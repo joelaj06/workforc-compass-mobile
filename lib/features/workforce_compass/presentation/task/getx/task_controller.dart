@@ -1,20 +1,30 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:work_compass/core/presentation/theme/primary_color.dart';
+import 'package:work_compass/core/presentation/utils/app_snack.dart';
+import 'package:work_compass/core/utils/location.dart';
 import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
+import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_in.dart';
+import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_out.dart';
 
 import '../../../data/datasources/location_service.dart';
 
 class TaskController extends GetxController {
+  TaskController({required this.userCheckIn, required this.userCheckOut});
+
+  final UserCheckIn userCheckIn;
+  final UserCheckOut userCheckOut;
+
+
   RxString currentDate = ''.obs;
   RxString currentTime = ''.obs;
   RxString currentLocation = 'Current Location'.obs;
@@ -25,21 +35,47 @@ class TaskController extends GetxController {
   Rx<LatLng> currentPosition = const LatLng(0, 0).obs;
   Rx<Task> task = Task.empty().obs;
   RxMap<PolylineId, Polyline> polylines = <PolylineId, Polyline>{}.obs;
+  RxDouble distance = 0.0.obs;
+
   late bool isLoaded;
 
   PageController pageController = PageController(initialPage: 0);
   LocationService locationService = LocationService();
   Completer<GoogleMapController> googleMapController =
       Completer<GoogleMapController>();
+  RxBool notifiedUser = false.obs;
 
   Location location = Location();
 
   @override
   void onInit() {
     isLoaded = false;
-    runCurrentTime();
     getLocationUpdate();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
+  }
+
+
+
+  void checkInOrOut() {
+    //check if user is within the geofence
+    if (task.value.location?.radius != null) {
+      if (distance.value < task.value.location!.radius!) {
+        //proceed with check in process
+      } else {
+        //show notification
+        AppSnack.show(
+          title: 'Task',
+          message: 'Sorry you are out of the destination',
+          status: SnackStatus.info,
+        );
+      }
+    }
   }
 
   void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) {
@@ -82,7 +118,7 @@ class TaskController extends GetxController {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: position,
-          zoom: 15,
+          // zoom: 15,
         ),
       ),
     );
@@ -129,15 +165,53 @@ class TaskController extends GetxController {
           }
           isLoaded = true;
         }
+        //get distance between user and destination
+        getDeviceProximity(currentPosition.value);
       }
     });
+  }
+
+  void getDeviceProximity(LatLng position) {
+    addMarker(
+      'currentLocation',
+      position,
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
+    );
+    final double distanceBetween = LocationUtils.haversineDistance(position,
+        LatLng(task.value.location?.lat ?? 0, task.value.location?.long ?? 0));
+
+    if (task.value.location?.radius != null) {
+      if (distanceBetween < task.value.location!.radius!) {
+        if (!notifiedUser.value) {
+          // Notify the user only if they haven't been notified yet
+          AppSnack.show(
+              title: '',
+              message: 'User reached to the destination',
+              status: SnackStatus.info);
+          notifiedUser(true);
+        }
+      } else {
+        // Reset the notification state if the user moves out of the geofence
+        notifiedUser(false);
+        /* AppSnack.show(
+          title: '',
+          message: 'User not reached to the destination',
+          status: SnackStatus.info);*/
+      }
+    }
   }
 
   void addMarker(String id, LatLng position, BitmapDescriptor? icon) {
     markers[id] = Marker(
         markerId: MarkerId(id),
         position: position,
-        icon: icon ?? BitmapDescriptor.defaultMarker);
+        icon: icon ?? BitmapDescriptor.defaultMarker,
+        draggable: true,
+        onDragEnd: (LatLng position) {
+          currentPosition(position);
+          print('current position... $currentPosition');
+          getDeviceProximity(position);
+        });
   }
 
   void addCircle(String id, LatLng position, double radius) {
@@ -163,7 +237,7 @@ class TaskController extends GetxController {
     );
   }
 
-  void getCurrentLocation() async {
+ /* void getCurrentLocation() async {
     isloadingCurrentLocation(true);
     final Position position = await locationService.determinePosition();
     final List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -176,7 +250,7 @@ class TaskController extends GetxController {
         '${placemark.street} - ${placemark.locality}, ${placemark.country}';
     isloadingCurrentLocation(false);
     currentLocation(loc);
-  }
+  }*/
 
   Future<String> getPlaceMarkFromCoordinates(double lat, double lng) async {
     final List<Placemark> placemarks = await placemarkFromCoordinates(lat, lng);
@@ -184,7 +258,7 @@ class TaskController extends GetxController {
     return '${place.street} - ${place.locality}, ${place.country}';
   }
 
-  void runCurrentTime() {
+ /* void runCurrentTime() {
     Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       final String formattedDate =
           DateFormat('EEEE, MMM d').format(DateTime.now());
@@ -192,5 +266,5 @@ class TaskController extends GetxController {
       final String formattedTime = DateFormat('HH:mm a').format(DateTime.now());
       currentTime(formattedTime);
     });
-  }
+  }*/
 }

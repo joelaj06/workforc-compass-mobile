@@ -1,7 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,6 +22,7 @@ class TaskScreen extends GetView<TaskController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.pageIndex(0);
     final TaskArgument? args =
         ModalRoute.of(context)?.settings.arguments as TaskArgument?;
     if(args != null) {
@@ -33,6 +32,23 @@ class TaskScreen extends GetView<TaskController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Check In'),
+        leading:  Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              onPressed: () {
+                if (controller.pageIndex.value == 0) {
+                  Navigator.of(context).maybePop();
+                } else {
+                    controller.pageController.previousPage(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.linear,
+                    );
+                }
+              },
+              icon: const Icon(Icons.arrow_back),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -54,7 +70,6 @@ class TaskScreen extends GetView<TaskController> {
   }
 
   Widget _buildMapPage(BuildContext context, Task task) {
-    print(controller.polylines);
     return Obx(
       () => GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -192,7 +207,7 @@ class TaskScreen extends GetView<TaskController> {
 
   GestureDetector _buildCheckButton(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: controller.checkInOrOut,
       child: AvatarGlow(
         glowRadiusFactor: 0.1,
         startDelay: const Duration(seconds: 5),
