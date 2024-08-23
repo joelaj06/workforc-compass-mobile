@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:logging/logging.dart';
 import 'package:work_compass/core/presentation/app/work_compass.dart';
+import 'package:work_compass/core/utils/notifications.dart';
 
 import 'core/error_handling/error_boundary.dart';
 import 'core/error_handling/error_reporter.dart';
@@ -29,6 +30,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await NotificationService.init();
 
   await FlutterConfig.loadEnvVariables();
 

@@ -38,10 +38,10 @@ class AppHTTPClient {
             const Duration(seconds: requestTimeout),
           );
       return _processResponse(response, endpoint);
-    } on SocketException catch (err) {
-      throw FetchDataException('Connection problem: $err', uri.toString());
-    } on TimeoutException catch (err) {
-      throw ApiNotRespondingException('Request Timeout: $err', uri.toString());
+    } on SocketException catch (_) {
+      throw FetchDataException('Connection problem. Please check your internet', uri.toString());
+    } on TimeoutException catch (_) {
+      throw ApiNotRespondingException('Request Timeout', uri.toString());
     }
   }
 

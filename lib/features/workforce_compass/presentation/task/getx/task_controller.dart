@@ -192,7 +192,7 @@ class TaskController extends GetxController {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: position,
-          // zoom: 15,
+           zoom: 15,
         ),
       ),
     );

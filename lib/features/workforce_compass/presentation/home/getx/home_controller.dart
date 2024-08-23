@@ -89,7 +89,7 @@ class HomeController extends GetxController {
     );
     failureOrTasks.fold((Failure failure) {
       isLoading(false);
-      AppSnack.show(title: 'Tasks', message: failure.message);
+      AppSnack.show(title: 'Tasks', message: failure.message, status: SnackStatus.error);
     }, (List<Task> userTasks) {
       isLoading(false);
       tasks(userTasks);

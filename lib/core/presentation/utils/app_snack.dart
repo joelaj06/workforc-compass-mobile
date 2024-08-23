@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -11,22 +10,43 @@ class AppSnack {
   }) {
     Get.showSnackbar(
       GetSnackBar(
-        title: title,
-        message: message,
+        titleText: Text(
+            status == SnackStatus.success
+                ? 'Success'
+                : status == SnackStatus.info
+                    ? 'Info'
+                    : 'Error',
+            style: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold)),
+        //  message: message,
         duration: const Duration(milliseconds: 3000),
+        messageText: Text(message, style: const TextStyle(color: Colors.black)),
         icon: Icon(
           status == null
-              ? Ionicons.checkmark_done_circle_outline
+              ? Ionicons.checkmark_done_circle
               : status == SnackStatus.info
-                  ? Ionicons.alert_circle_outline
-                  : Ionicons.close_circle_outline,
+                  ? Ionicons.alert_circle
+                  : Ionicons.close_circle,
           color: status == null
               ? Colors.green
               : status == SnackStatus.info
                   ? Colors.orange
                   : Colors.red,
         ),
-        snackStyle: SnackStyle.GROUNDED,
+        snackStyle: SnackStyle.FLOATING,
+        /* borderColor: status == null
+            ? Colors.green
+            : status == SnackStatus.info
+            ? Colors.orange
+            : Colors.red,*/
+        backgroundColor: Colors.white.withOpacity(0.4),
+        snackPosition: SnackPosition.TOP,
+        borderWidth: 3.0,
+        //overlayBlur: 2.0,
+        barBlur: 2.0,
+        // padding: AppPaddings.mA,
+        margin: const EdgeInsets.all(8.0),
+        borderRadius: 10,
       ),
     );
   }
