@@ -27,6 +27,7 @@ class TaskScreen extends GetView<TaskController> {
         ModalRoute.of(context)?.settings.arguments as TaskArgument?;
     if (args != null) {
       controller.task(args.task);
+      controller.isCheckedIn();
     }
     // controller.getCurrentLocation();
     return Scaffold(
@@ -226,17 +227,17 @@ class TaskScreen extends GetView<TaskController> {
                   ? context.colors.secondary.shade400
                   : context.colors.primary.shade400,
             ),
-            child: const Center(
+            child:  Center(
               child: Column(
                 children: <Widget>[
-                  Icon(
+                  const Icon(
                     Icons.touch_app_outlined,
                     color: Colors.white,
                     size: 100,
                   ),
                   Text(
-                    'CLOCK IN',
-                    style: TextStyle(
+                   controller.hasCheckedIn.value ? 'CLOCK OUT' : 'CLOCK IN',
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   )

@@ -22,20 +22,20 @@ class AppSnack {
         duration: const Duration(milliseconds: 3000),
         messageText: Text(message, style: const TextStyle(color: Colors.black)),
         icon: Icon(
-          status == null
+          status == SnackStatus.success
               ? Ionicons.checkmark_done_circle
               : status == SnackStatus.info
                   ? Ionicons.alert_circle
                   : Ionicons.close_circle,
-          color: status == null
-              ? Colors.green
+          color: status == SnackStatus.success
+              ? Colors.green.shade900
               : status == SnackStatus.info
                   ? Colors.orange
                   : Colors.red,
         ),
         snackStyle: SnackStyle.FLOATING,
         /* borderColor: status == null
-            ? Colors.green
+            ? Colors.green.shade900
             : status == SnackStatus.info
             ? Colors.orange
             : Colors.red,*/

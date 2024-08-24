@@ -9,7 +9,6 @@ import 'package:work_compass/core/presentation/utils/app_spacing.dart';
 import 'package:work_compass/core/presentation/widgets/animated_column.dart';
 import 'package:work_compass/core/presentation/widgets/app_text_input_field.dart';
 import 'package:work_compass/core/utils/data_formatter.dart';
-import 'package:work_compass/core/utils/notifications.dart';
 import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
 import 'package:work_compass/features/workforce_compass/presentation/home/getx/home_controller.dart';
 
@@ -21,12 +20,6 @@ class HomeScreen extends GetView<HomeController> {
     //  controller.getCurrentLocation();
     //controller.getUserTasks();
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          NotificationService.showInstantNotification(
-              'title', 'This is a test notification');
-        },
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[

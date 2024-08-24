@@ -29,6 +29,7 @@ mixin _$Attendance {
   @JsonKey(name: 'check_out')
   String? get checkout => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_checked_in')
   bool? get hasCheckedIn => throw _privateConstructorUsedError;
   bool? get completed => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
@@ -51,7 +52,7 @@ abstract class $AttendanceCopyWith<$Res> {
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
-      bool? hasCheckedIn,
+      @JsonKey(name: 'is_checked_in') bool? hasCheckedIn,
       bool? completed,
       String? createdAt});
 }
@@ -129,7 +130,7 @@ abstract class _$$AttendanceImplCopyWith<$Res>
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
       String? location,
-      bool? hasCheckedIn,
+      @JsonKey(name: 'is_checked_in') bool? hasCheckedIn,
       bool? completed,
       String? createdAt});
 }
@@ -200,7 +201,7 @@ class _$AttendanceImpl extends _Attendance {
       @JsonKey(name: 'check_in') this.checkIn,
       @JsonKey(name: 'check_out') this.checkout,
       this.location,
-      this.hasCheckedIn,
+      @JsonKey(name: 'is_checked_in') this.hasCheckedIn,
       this.completed,
       this.createdAt})
       : super._();
@@ -223,6 +224,7 @@ class _$AttendanceImpl extends _Attendance {
   @override
   final String? location;
   @override
+  @JsonKey(name: 'is_checked_in')
   final bool? hasCheckedIn;
   @override
   final bool? completed;
@@ -281,7 +283,7 @@ abstract class _Attendance extends Attendance {
       @JsonKey(name: 'check_in') final String? checkIn,
       @JsonKey(name: 'check_out') final String? checkout,
       final String? location,
-      final bool? hasCheckedIn,
+      @JsonKey(name: 'is_checked_in') final bool? hasCheckedIn,
       final bool? completed,
       final String? createdAt}) = _$AttendanceImpl;
   const _Attendance._() : super._();
@@ -304,6 +306,7 @@ abstract class _Attendance extends Attendance {
   @override
   String? get location;
   @override
+  @JsonKey(name: 'is_checked_in')
   bool? get hasCheckedIn;
   @override
   bool? get completed;

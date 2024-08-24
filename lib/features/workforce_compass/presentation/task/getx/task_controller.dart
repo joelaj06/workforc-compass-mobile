@@ -19,6 +19,7 @@ import 'package:work_compass/features/workforce_compass/data/models/response/tas
 import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_in.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_out.dart';
 
+import '../../../../../core/utils/notifications.dart';
 import '../../../data/datasources/location_service.dart';
 
 class TaskController extends GetxController {
@@ -53,7 +54,7 @@ class TaskController extends GetxController {
   @override
   void onInit() {
     isLoaded = false;
-    isCheckedIn();
+
     getLocationUpdate();
     super.onInit();
   }
@@ -192,7 +193,7 @@ class TaskController extends GetxController {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: position,
-           zoom: 15,
+          zoom: 15,
         ),
       ),
     );
@@ -262,6 +263,8 @@ class TaskController extends GetxController {
               title: '',
               message: 'User reached to the destination',
               status: SnackStatus.info);
+          NotificationService.showInstantNotification('Check in',
+              'You have reached to the destination. You can check in now..');
           notifiedUser(true);
         }
       } else {
