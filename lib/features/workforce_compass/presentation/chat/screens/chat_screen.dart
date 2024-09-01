@@ -15,21 +15,28 @@ class ChatScreen extends GetView<ChatController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getUserChats(1);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chats'),
+        automaticallyImplyLeading: false,
       ),
       body: _buildChatList(context),
     );
   }
 
   Widget _buildChatList(BuildContext context) {
-    return Obx(
-          () => ListView.builder(
-          itemCount: controller.chats.length,
-          itemBuilder: (BuildContext context, int index) {
-            return _buildChatCard(context, controller.chats[index],index);
-          }),
+    return RefreshIndicator(
+      onRefresh: () {
+        return controller.getUserChats(1);
+      },
+      child: Obx(
+            () => ListView.builder(
+            itemCount: controller.chats.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildChatCard(context, controller.chats[index],index);
+            }),
+      ),
     );
   }
 

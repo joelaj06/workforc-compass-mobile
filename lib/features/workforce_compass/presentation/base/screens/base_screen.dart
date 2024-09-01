@@ -4,7 +4,6 @@ import 'package:work_compass/core/presentation/theme/app_theme.dart';
 import '../../../../../core/presentation/nav/bottom_nav_icons.dart';
 import '../../../../../core/presentation/nav/bottom_nav_tabs.dart';
 import '../../../../../core/presentation/theme/primary_color.dart';
-import '../../../../../core/presentation/theme/secondary_color.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -86,19 +85,12 @@ class _BaseScreenState extends State<BaseScreen> {
             AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               child: index == 2
-                  ? Badge(
-                      backgroundColor: SecondaryColor.color.shade900,
-                      label: const Text(
-                        '0',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      child: Icon(
-                        icon,
-                        color: index == _selectedIndexItem
-                            ? context.colors.primary
-                            : Colors.grey,
-                      ),
-                    )
+                  ? Icon(
+                    icon,
+                    color: index == _selectedIndexItem
+                        ? context.colors.primary
+                        : Colors.grey,
+                  )
                   : Icon(
                       icon,
                       color: index == _selectedIndexItem

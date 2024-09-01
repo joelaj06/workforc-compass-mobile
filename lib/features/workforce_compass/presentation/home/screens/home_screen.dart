@@ -137,61 +137,58 @@ class HomeScreen extends GetView<HomeController> {
   Widget _buildCompletedTaskListCard(BuildContext context, Task task) {
     return Padding(
       padding: AppPaddings.sA,
-      child: GestureDetector(
-        onTap: () => controller.navigateToTaskScreen(task),
-        child: Container(
-          height: 100,
-          padding: AppPaddings.sA,
-          decoration: BoxDecoration(
+      child: Container(
+        height: 100,
+        padding: AppPaddings.sA,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: context.colors.primary, width: 2)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: context.colors.primary, width: 2)),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  AppImageAssets.task,
-                  width: 100,
-                ),
+              child: Image.asset(
+                AppImageAssets.task,
+                width: 100,
               ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      task.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    task.title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Icon(
-                                  IconlyLight.calendar,
-                                  color: context.colors.primary.shade900,
-                                ),
-                                Text(DataFormatter.formatDateToString(
-                                    task.startDate ?? '')),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                IconlyLight.calendar,
+                                color: context.colors.primary.shade900,
+                              ),
+                              Text(DataFormatter.formatDateToString(
+                                  task.startDate ?? '')),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -208,21 +205,21 @@ class HomeScreen extends GetView<HomeController> {
                     width: 40,
                     child: CircularProgressIndicator.adaptive()),
               )
-            : controller.tasks.isEmpty
+            : controller.pendingTasks.isEmpty
                 ? const Align(
                     alignment: Alignment.center,
                     child: Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text('No tasks found'),
+                      child: Text('You have no pending task'),
                     ),
                   )
                 : ListView.builder(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    itemCount: controller.tasks.length,
+                    itemCount: controller.pendingTasks.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Obx(() => _buildPendingWorkCard(
-                          context, controller.tasks[index]));
+                          context, controller.pendingTasks[index]));
                     }),
       ),
     );

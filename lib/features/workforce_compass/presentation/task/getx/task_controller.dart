@@ -18,6 +18,7 @@ import 'package:work_compass/features/workforce_compass/data/models/response/att
 import 'package:work_compass/features/workforce_compass/data/models/response/task/task_model.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_in.dart';
 import 'package:work_compass/features/workforce_compass/domain/usecases/attendance/check_out.dart';
+import 'package:work_compass/features/workforce_compass/presentation/home/getx/home_controller.dart';
 
 import '../../../../../core/utils/notifications.dart';
 import '../../../data/datasources/location_service.dart';
@@ -51,6 +52,7 @@ class TaskController extends GetxController {
   RxBool hasCheckedIn = false.obs;
 
   Location location = Location();
+  final HomeController _homeController = Get.find();
 
   @override
   void onInit() {
@@ -92,6 +94,7 @@ class TaskController extends GetxController {
       AttendanceRequest(
         taskId: task.value.id,
         location: task.value.location?.address,
+        id: attendance.value.id,
       ),
     );
 
@@ -108,6 +111,7 @@ class TaskController extends GetxController {
         message: 'Check Out Successful',
         status: SnackStatus.success,
       );
+      _homeController.getUserTasks();
     });
   }
 
@@ -144,7 +148,7 @@ class TaskController extends GetxController {
         if (hasCheckedIn.value) {
           checkOut();
         } else {
-          checkIn();
+         checkIn();
         }
       } else {
         //show notification
@@ -258,7 +262,7 @@ class TaskController extends GetxController {
     );
     final double distanceBetween = LocationUtils.haversineDistance(position,
         LatLng(task.value.location?.lat ?? 0, task.value.location?.long ?? 0));
-
+      distance(distanceBetween);
     if (task.value.location?.radius != null) {
       if (distanceBetween < task.value.location!.radius!) {
         if (!notifiedUser.value) {

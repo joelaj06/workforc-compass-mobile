@@ -32,7 +32,7 @@ class TaskScreen extends GetView<TaskController> {
     // controller.getCurrentLocation();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Check In'),
+        title: const Text(''),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(

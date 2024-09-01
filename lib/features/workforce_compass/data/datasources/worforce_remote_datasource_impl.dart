@@ -35,7 +35,7 @@ class WorkforceRemoteDatasourceImpl implements WorkforceRemoteDatasource {
 
   @override
   Future<Attendance> userCheckOut(AttendanceRequest attendanceRequest) async {
-    final Map<String, dynamic> json = await _client.post(
+    final Map<String, dynamic> json = await _client.put(
         WorkForceEndpoints.checkout(attendanceRequest.id!),
         body: attendanceRequest.toJson());
     return Attendance.fromJson(json);

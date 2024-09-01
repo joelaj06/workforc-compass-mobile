@@ -165,7 +165,7 @@ class ChatController extends GetxController {
     Get.toNamed<dynamic>(AppRoutes.messages, arguments: ChatArgument(chat));
   }
 
-  void getUserChats(int pageKey) async {
+  Future<void> getUserChats(int pageKey) async {
     final Either<Failure, ListPage<Chat>> failureOrChats =
     await fetchUserChats(NoParams());
     failureOrChats.fold(

@@ -63,6 +63,11 @@ class HomeController extends GetxController {
       .toList()
       .obs;
 
+  RxList<Task> get pendingTasks => tasks
+      .where((Task task) => task.status?.toLowerCase() == 'pending')
+      .toList()
+      .obs;
+
   void onSearchQueryFieldInputChanged(String val) {
     searchQuery(val);
     debugPrint(searchQuery.value);

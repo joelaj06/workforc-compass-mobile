@@ -25,7 +25,9 @@ class ProfileScreen extends GetView<ProfileController> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Edit Profile'),
+          automaticallyImplyLeading: false,
         ),
+
         bottomNavigationBar: SizedBox(
           height: 60,
           child: AppButton(
