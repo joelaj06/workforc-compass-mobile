@@ -15,7 +15,7 @@ class LoginResponse with _$LoginResponse {
     String? address,
     String? token,
     String? phone,
-    String? image,
+    String? imgUrl,
     @JsonKey(name: 'job_title') String? jobTitle,
     @JsonKey(name: 'job_description') String? jobDescription,
     String? company,

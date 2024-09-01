@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -30,7 +31,7 @@ class AttendanceScreen extends GetView<AttendanceController> {
               SizedBox(
                 height: 50,
                   child: _buildMonthPicker(context)),
-              Flexible(
+              Expanded(
                 child: Obx(
                   () =>
                       _buildAttendanceTable(context, controller.attendanceList),
@@ -126,10 +127,7 @@ class AttendanceScreen extends GetView<AttendanceController> {
                       ),
                       Expanded(
                         child: Text(
-                          controller.calculateWorkingHours(
-                            controller.attendanceList[index].checkIn ?? '',
-                            controller.attendanceList[index].checkout ?? '',
-                          ),
+                         controller.attendanceList[index].workingHrs ?? '---',
                         ),
                       ),
                     ],
@@ -203,10 +201,7 @@ class AttendanceScreen extends GetView<AttendanceController> {
             _buildModalListCard(
               context,
               'Working Hrs',
-              controller.calculateWorkingHours(
-                controller.attendanceList[index].checkIn ?? '',
-                controller.attendanceList[index].checkout ?? '',
-              ),
+              attendance.workingHrs ?? '--',
             ),
             _buildModalListCard(
                 context, 'Location', attendance.location ?? '--'),

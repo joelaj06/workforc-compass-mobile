@@ -6,20 +6,20 @@ final List<IconData> navIconSolidList  = <IconData>[
   IconlyBold.home,
   IconlyBold.calendar,
   Ionicons.chatbubbles,
-  IconlyBold.document,
+  IconlyBold.profile,
 ];
 
 final List<IconData>navIconList  = <IconData>[
   IconlyLight.home,
   IconlyLight.calendar,
   Ionicons.chatbubbles_outline,
-  IconlyLight.document,
+  IconlyLight.profile
 ];
 
 final List<String> navIconTexts = <String>[
   'Home',
   'Attendance',
   'Chats',
-  'More',
+  'Profile',
 ];
 

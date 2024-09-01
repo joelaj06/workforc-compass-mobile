@@ -28,6 +28,7 @@ mixin _$Attendance {
   String? get checkIn => throw _privateConstructorUsedError;
   @JsonKey(name: 'check_out')
   String? get checkout => throw _privateConstructorUsedError;
+  String? get workingHrs => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_checked_in')
   bool? get hasCheckedIn => throw _privateConstructorUsedError;
@@ -51,6 +52,7 @@ abstract class $AttendanceCopyWith<$Res> {
       @JsonKey(name: 'start_date') String? startDate,
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
+      String? workingHrs,
       String? location,
       @JsonKey(name: 'is_checked_in') bool? hasCheckedIn,
       bool? completed,
@@ -74,6 +76,7 @@ class _$AttendanceCopyWithImpl<$Res, $Val extends Attendance>
     Object? startDate = freezed,
     Object? checkIn = freezed,
     Object? checkout = freezed,
+    Object? workingHrs = freezed,
     Object? location = freezed,
     Object? hasCheckedIn = freezed,
     Object? completed = freezed,
@@ -95,6 +98,10 @@ class _$AttendanceCopyWithImpl<$Res, $Val extends Attendance>
       checkout: freezed == checkout
           ? _value.checkout
           : checkout // ignore: cast_nullable_to_non_nullable
+              as String?,
+      workingHrs: freezed == workingHrs
+          ? _value.workingHrs
+          : workingHrs // ignore: cast_nullable_to_non_nullable
               as String?,
       location: freezed == location
           ? _value.location
@@ -129,6 +136,7 @@ abstract class _$$AttendanceImplCopyWith<$Res>
       @JsonKey(name: 'start_date') String? startDate,
       @JsonKey(name: 'check_in') String? checkIn,
       @JsonKey(name: 'check_out') String? checkout,
+      String? workingHrs,
       String? location,
       @JsonKey(name: 'is_checked_in') bool? hasCheckedIn,
       bool? completed,
@@ -150,6 +158,7 @@ class __$$AttendanceImplCopyWithImpl<$Res>
     Object? startDate = freezed,
     Object? checkIn = freezed,
     Object? checkout = freezed,
+    Object? workingHrs = freezed,
     Object? location = freezed,
     Object? hasCheckedIn = freezed,
     Object? completed = freezed,
@@ -171,6 +180,10 @@ class __$$AttendanceImplCopyWithImpl<$Res>
       checkout: freezed == checkout
           ? _value.checkout
           : checkout // ignore: cast_nullable_to_non_nullable
+              as String?,
+      workingHrs: freezed == workingHrs
+          ? _value.workingHrs
+          : workingHrs // ignore: cast_nullable_to_non_nullable
               as String?,
       location: freezed == location
           ? _value.location
@@ -200,6 +213,7 @@ class _$AttendanceImpl extends _Attendance {
       @JsonKey(name: 'start_date') this.startDate,
       @JsonKey(name: 'check_in') this.checkIn,
       @JsonKey(name: 'check_out') this.checkout,
+      this.workingHrs,
       this.location,
       @JsonKey(name: 'is_checked_in') this.hasCheckedIn,
       this.completed,
@@ -222,6 +236,8 @@ class _$AttendanceImpl extends _Attendance {
   @JsonKey(name: 'check_out')
   final String? checkout;
   @override
+  final String? workingHrs;
+  @override
   final String? location;
   @override
   @JsonKey(name: 'is_checked_in')
@@ -233,7 +249,7 @@ class _$AttendanceImpl extends _Attendance {
 
   @override
   String toString() {
-    return 'Attendance(id: $id, startDate: $startDate, checkIn: $checkIn, checkout: $checkout, location: $location, hasCheckedIn: $hasCheckedIn, completed: $completed, createdAt: $createdAt)';
+    return 'Attendance(id: $id, startDate: $startDate, checkIn: $checkIn, checkout: $checkout, workingHrs: $workingHrs, location: $location, hasCheckedIn: $hasCheckedIn, completed: $completed, createdAt: $createdAt)';
   }
 
   @override
@@ -247,6 +263,8 @@ class _$AttendanceImpl extends _Attendance {
             (identical(other.checkIn, checkIn) || other.checkIn == checkIn) &&
             (identical(other.checkout, checkout) ||
                 other.checkout == checkout) &&
+            (identical(other.workingHrs, workingHrs) ||
+                other.workingHrs == workingHrs) &&
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.hasCheckedIn, hasCheckedIn) ||
@@ -260,7 +278,7 @@ class _$AttendanceImpl extends _Attendance {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, startDate, checkIn, checkout,
-      location, hasCheckedIn, completed, createdAt);
+      workingHrs, location, hasCheckedIn, completed, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -282,6 +300,7 @@ abstract class _Attendance extends Attendance {
       @JsonKey(name: 'start_date') final String? startDate,
       @JsonKey(name: 'check_in') final String? checkIn,
       @JsonKey(name: 'check_out') final String? checkout,
+      final String? workingHrs,
       final String? location,
       @JsonKey(name: 'is_checked_in') final bool? hasCheckedIn,
       final bool? completed,
@@ -303,6 +322,8 @@ abstract class _Attendance extends Attendance {
   @override
   @JsonKey(name: 'check_out')
   String? get checkout;
+  @override
+  String? get workingHrs;
   @override
   String? get location;
   @override

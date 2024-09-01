@@ -2,12 +2,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:work_compass/core/presentation/utils/app_snack.dart';
 import 'package:work_compass/features/authentication/data/domain/usecase/load_user.dart';
 
 import '../../../../../core/errors/failure.dart';
 
 import '../../../../../core/presentation/routes/app_routes.dart';
-import '../../../../../core/presentation/widgets/app_snacks.dart';
 import '../../../../../core/utils/shared_preferences_wrapper.dart';
 import '../../../../../core/utils/shared_prefs_keys.dart';
 import '../../../data/domain/usecase/login_user.dart';
@@ -48,7 +48,6 @@ class LoginController extends GetxController{
     failureOrUser.fold(
           (Failure failure) {
         isLoading(false);
-        // AppSnacks().showSuccess('Login', failure.message);
       },
           (User user) {
         isLoading(false);
@@ -74,13 +73,12 @@ class LoginController extends GetxController{
     failureOrUser.fold(
           (Failure failure) {
         isLoading(false);
-        AppSnacks.showError('Login', failure.message);
-        print('Printing something');
+       AppSnack.show(title: '', message: failure.message, status: SnackStatus.error);
         print(failure.message);
       },
           (User user) {
         isLoading(false);
-        AppSnacks.showSuccess('Login', 'You signed in successfully');
+        AppSnack.show(title: '', message: 'Login Successful', status: SnackStatus.success);
         Get.toNamed<dynamic>(AppRoutes.base);
       },
     );
@@ -89,7 +87,9 @@ class LoginController extends GetxController{
   void navigateToSignUpScreen() async{
     final dynamic result = await Get.toNamed<dynamic>(AppRoutes.signup);
     if(result != null){
-      AppSnacks.showSuccess('Success', 'User account created successfully');
+      AppSnack.show(title: '', message: 'User account created successfully',
+          status: SnackStatus.success);
+
     }
   }
 

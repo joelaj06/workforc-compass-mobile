@@ -30,7 +30,7 @@ mixin _$LoginResponse {
   String? get address => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
-  String? get image => throw _privateConstructorUsedError;
+  String? get imgUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_title')
   String? get jobTitle => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_description')
@@ -59,7 +59,7 @@ abstract class $LoginResponseCopyWith<$Res> {
       String? address,
       String? token,
       String? phone,
-      String? image,
+      String? imgUrl,
       @JsonKey(name: 'job_title') String? jobTitle,
       @JsonKey(name: 'job_description') String? jobDescription,
       String? company,
@@ -87,7 +87,7 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
     Object? address = freezed,
     Object? token = freezed,
     Object? phone = freezed,
-    Object? image = freezed,
+    Object? imgUrl = freezed,
     Object? jobTitle = freezed,
     Object? jobDescription = freezed,
     Object? company = freezed,
@@ -123,9 +123,9 @@ class _$LoginResponseCopyWithImpl<$Res, $Val extends LoginResponse>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      imgUrl: freezed == imgUrl
+          ? _value.imgUrl
+          : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       jobTitle: freezed == jobTitle
           ? _value.jobTitle
@@ -167,7 +167,7 @@ abstract class _$$LoginResponseImplCopyWith<$Res>
       String? address,
       String? token,
       String? phone,
-      String? image,
+      String? imgUrl,
       @JsonKey(name: 'job_title') String? jobTitle,
       @JsonKey(name: 'job_description') String? jobDescription,
       String? company,
@@ -193,7 +193,7 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
     Object? address = freezed,
     Object? token = freezed,
     Object? phone = freezed,
-    Object? image = freezed,
+    Object? imgUrl = freezed,
     Object? jobTitle = freezed,
     Object? jobDescription = freezed,
     Object? company = freezed,
@@ -229,9 +229,9 @@ class __$$LoginResponseImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
+      imgUrl: freezed == imgUrl
+          ? _value.imgUrl
+          : imgUrl // ignore: cast_nullable_to_non_nullable
               as String?,
       jobTitle: freezed == jobTitle
           ? _value.jobTitle
@@ -268,7 +268,7 @@ class _$LoginResponseImpl extends _LoginResponse {
       this.address,
       this.token,
       this.phone,
-      this.image,
+      this.imgUrl,
       @JsonKey(name: 'job_title') this.jobTitle,
       @JsonKey(name: 'job_description') this.jobDescription,
       this.company,
@@ -298,7 +298,7 @@ class _$LoginResponseImpl extends _LoginResponse {
   @override
   final String? phone;
   @override
-  final String? image;
+  final String? imgUrl;
   @override
   @JsonKey(name: 'job_title')
   final String? jobTitle;
@@ -322,7 +322,7 @@ class _$LoginResponseImpl extends _LoginResponse {
 
   @override
   String toString() {
-    return 'LoginResponse(id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, token: $token, phone: $phone, image: $image, jobTitle: $jobTitle, jobDescription: $jobDescription, company: $company, skills: $skills, createdAt: $createdAt)';
+    return 'LoginResponse(id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, token: $token, phone: $phone, imgUrl: $imgUrl, jobTitle: $jobTitle, jobDescription: $jobDescription, company: $company, skills: $skills, createdAt: $createdAt)';
   }
 
   @override
@@ -339,7 +339,7 @@ class _$LoginResponseImpl extends _LoginResponse {
             (identical(other.address, address) || other.address == address) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.image, image) || other.image == image) &&
+            (identical(other.imgUrl, imgUrl) || other.imgUrl == imgUrl) &&
             (identical(other.jobTitle, jobTitle) ||
                 other.jobTitle == jobTitle) &&
             (identical(other.jobDescription, jobDescription) ||
@@ -361,7 +361,7 @@ class _$LoginResponseImpl extends _LoginResponse {
       address,
       token,
       phone,
-      image,
+      imgUrl,
       jobTitle,
       jobDescription,
       company,
@@ -391,7 +391,7 @@ abstract class _LoginResponse extends LoginResponse {
       final String? address,
       final String? token,
       final String? phone,
-      final String? image,
+      final String? imgUrl,
       @JsonKey(name: 'job_title') final String? jobTitle,
       @JsonKey(name: 'job_description') final String? jobDescription,
       final String? company,
@@ -420,7 +420,7 @@ abstract class _LoginResponse extends LoginResponse {
   @override
   String? get phone;
   @override
-  String? get image;
+  String? get imgUrl;
   @override
   @JsonKey(name: 'job_title')
   String? get jobTitle;

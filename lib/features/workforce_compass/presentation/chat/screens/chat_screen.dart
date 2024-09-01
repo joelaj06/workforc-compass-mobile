@@ -35,7 +35,7 @@ class ChatScreen extends GetView<ChatController> {
 
   Widget _buildChatCard(BuildContext context, Chat chat, int index) {
     final User user = controller.getRecipient(chat);
-    final String image = user.imageUrl ?? '';
+    final String image = user.imgUrl ?? '';
     return GestureDetector(
       onTap: () {
         controller.navigateToMessages(chat,index);

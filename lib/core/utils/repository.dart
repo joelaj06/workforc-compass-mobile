@@ -8,8 +8,6 @@ import 'app_log.dart';
 
 abstract class Repository {
 
-
-
   Future<Either<Failure, T>> makeRequest<T>(
       Future<T> request, {
         Duration? duration,

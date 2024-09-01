@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:work_compass/features/authentication/presentation/login/getx/login_bindings.dart';
 import 'package:work_compass/features/authentication/presentation/login/screens/login_screen.dart';
+import 'package:work_compass/features/authentication/presentation/signup/getx/signup_bindings.dart';
+import 'package:work_compass/features/authentication/presentation/signup/screens/singup_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/attendance/getx/attendance_bindings.dart';
 import 'package:work_compass/features/workforce_compass/presentation/attendance/screens/attendance_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/base/screens/base_screen.dart';
@@ -12,6 +14,8 @@ import 'package:work_compass/features/workforce_compass/presentation/message/get
 import 'package:work_compass/features/workforce_compass/presentation/message/screens/message_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/more/screens/more_screens.dart';
 import 'package:work_compass/features/workforce_compass/presentation/notification/screens/notification_screen.dart';
+import 'package:work_compass/features/workforce_compass/presentation/profile/getx/profile_bindings.dart';
+import 'package:work_compass/features/workforce_compass/presentation/profile/screen/profile_screen.dart';
 import 'package:work_compass/features/workforce_compass/presentation/task/getx/task_bindings.dart';
 import 'package:work_compass/features/workforce_compass/presentation/task/screens/task_screen.dart';
 
@@ -31,11 +35,17 @@ class Pages {
           HomeBindings(),
           AttendanceBindings(),
           ChatBindings(),
+          ProfileBindings(),
         ]),
     GetPage<AppRoutes>(
       name: AppRoutes.login,
       page: () => const LoginScreen(),
       binding: LoginBindings(),
+    ),
+    GetPage<AppRoutes>(
+      name: AppRoutes.signup,
+      page: () => const SignUpScreen(),
+      binding: SignUpBindings(),
     ),
     GetPage<AppRoutes>(
       name: AppRoutes.home,
@@ -68,6 +78,11 @@ class Pages {
       name: AppRoutes.messages,
       page: () => const MessageScreen(),
       binding: MessageBindings(),
+    ),
+    GetPage<AppRoutes>(
+      name: AppRoutes.profile,
+      page: () => const ProfileScreen(),
+      binding: ProfileBindings(),
     ),
   ];
 }

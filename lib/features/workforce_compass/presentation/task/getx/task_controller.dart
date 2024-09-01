@@ -39,6 +39,7 @@ class TaskController extends GetxController {
   Rx<Task> task = Task.empty().obs;
   RxMap<PolylineId, Polyline> polylines = <PolylineId, Polyline>{}.obs;
   RxDouble distance = 0.0.obs;
+  Rx<Attendance> attendance = Attendance.empty().obs;
 
   late bool isLoaded;
 
@@ -80,8 +81,9 @@ class TaskController extends GetxController {
         message: failure.message,
         status: SnackStatus.error,
       );
-    }, (Attendance attendance) {
-      hasCheckedIn(attendance.hasCheckedIn);
+    }, (Attendance data) {
+      hasCheckedIn(data.hasCheckedIn);
+      attendance(data);
     });
   }
 
@@ -99,7 +101,8 @@ class TaskController extends GetxController {
         message: failure.message,
         status: SnackStatus.error,
       );
-    }, (Attendance attendance) {
+    }, (Attendance data) {
+      attendance(data);
       AppSnack.show(
         title: 'Task',
         message: 'Check Out Successful',
@@ -122,8 +125,9 @@ class TaskController extends GetxController {
         message: failure.message,
         status: SnackStatus.error,
       );
-    }, (Attendance attendance) {
-      hasCheckedIn(attendance.hasCheckedIn);
+    }, (Attendance data) {
+      hasCheckedIn(data.hasCheckedIn);
+      attendance(data);
       AppSnack.show(
         title: 'Task',
         message: 'Check In Successful',

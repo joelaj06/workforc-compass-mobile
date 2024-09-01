@@ -139,7 +139,7 @@ class TaskScreen extends GetView<TaskController> {
                 const AppSpacing(
                   v: 20,
                 ),
-                _buildAttendanceInfo(),
+               _buildAttendanceInfo(),
                 const AppSpacing(
                   v: 10,
                 ),
@@ -186,17 +186,29 @@ class TaskScreen extends GetView<TaskController> {
 
   Padding _buildAttendanceInfo() {
     return Padding(
-      padding: AppPaddings.lA.add(AppPaddings.bodyH),
+      padding:  AppPaddings.lA,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _buildCheckCard(
-              title: 'Clock In', icon: AssetSVGs.clockDown, time: '--'),
-          _buildCheckCard(
-              title: 'Clock Out', icon: AssetSVGs.clockUp, time: '--'),
-          _buildCheckCard(
-              title: 'Working Hrs', icon: AssetSVGs.clockCheck, time: '--'),
+          Obx(() =>  _buildCheckCard(
+              title: 'Clock In',
+              icon: AssetSVGs.clockDown,
+              time: controller.attendance.value.checkIn ?? '--',
+            ),
+          ),
+          Obx(() =>  _buildCheckCard(
+              title: 'Clock Out',
+              icon: AssetSVGs.clockUp,
+              time: controller.attendance.value.checkout ?? '--',
+            ),
+          ),
+          Obx(() => _buildCheckCard(
+              title: 'Working Hrs',
+              icon: AssetSVGs.clockCheck,
+              time: controller.attendance.value.workingHrs ?? '--',
+            ),
+          ),
         ],
       ),
     );
@@ -227,7 +239,7 @@ class TaskScreen extends GetView<TaskController> {
                   ? context.colors.secondary.shade400
                   : context.colors.primary.shade400,
             ),
-            child:  Center(
+            child: Center(
               child: Column(
                 children: <Widget>[
                   const Icon(
@@ -236,7 +248,7 @@ class TaskScreen extends GetView<TaskController> {
                     size: 100,
                   ),
                   Text(
-                   controller.hasCheckedIn.value ? 'CLOCK OUT' : 'CLOCK IN',
+                    controller.hasCheckedIn.value ? 'CLOCK OUT' : 'CLOCK IN',
                     style: const TextStyle(
                       color: Colors.white,
                     ),
@@ -354,30 +366,33 @@ class TaskScreen extends GetView<TaskController> {
 
   Widget _buildCheckCard(
       {required String title, required String time, required String icon}) {
-    return Column(
-      children: <Widget>[
-        SvgPicture.asset(
-          icon,
-          height: 40,
-          width: 40,
-          colorFilter:
-              const ColorFilter.mode(PrimaryColor.color, BlendMode.srcIn),
-          semanticsLabel: title,
-        ),
-        Text(
-          time,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return Padding(
+      padding: AppPaddings.mH,
+      child: Column(
+        children: <Widget>[
+          SvgPicture.asset(
+            icon,
+            height: 40,
+            width: 40,
+            colorFilter:
+                const ColorFilter.mode(PrimaryColor.color, BlendMode.srcIn),
+            semanticsLabel: title,
           ),
-        ),
-        Text(
-          title,
-          style: const TextStyle(
-            color: Colors.grey,
+          Text(
+            time,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ],
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

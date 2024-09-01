@@ -1,4 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:work_compass/core/presentation/theme/app_theme.dart';
@@ -17,7 +20,7 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    //  controller.getCurrentLocation();
+      controller.getCurrentLocation();
     //controller.getUserTasks();
     return Scaffold(
       body: SingleChildScrollView(
@@ -65,7 +68,7 @@ class HomeScreen extends GetView<HomeController> {
               bottomRight: Radius.circular(30))),
       child: AppAnimatedColumn(
         children: <Widget>[
-          _buildProfile(),
+          _buildProfile(context),
           const AppSpacing(
             v: 20,
           ),
@@ -292,49 +295,64 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Row _buildProfile() {
+  Row _buildProfile(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: AppPaddings.sR,
-          child: CircleAvatar(
-            radius: 26,
-            backgroundColor: HintColor.color.shade300,
-            child: const Icon(Icons.person),
+          child: Obx(
+            () => CircleAvatar(
+              radius: 26,
+              backgroundColor: HintColor.color.shade300,
+              child: controller.user.value.imgUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: controller.user.value.imgUrl!,
+                      placeholder: (BuildContext context, String url) =>
+                          Image.asset(AppImageAssets.blankProfilePicture),
+                      errorWidget:
+                          (BuildContext context, String url, dynamic error) =>
+                              const Icon(Icons.error),
+                    )
+                  : const Icon(Icons.person),
+            ),
           ),
         ),
         Obx(() => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              '${controller.user.value.firstName} ${controller.user.value.lastName ?? ''}',
+              style: const TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,  // Adjusted to start
               children: <Widget>[
-                Text(
-                  '${controller.user.value.firstName} ${controller.user.value.lastName ?? ''}',
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Icon(IconlyBold.location),
-                    Obx(
-                      () => FittedBox(
-                        fit: BoxFit.fill,
-                        child: Text(
-                          controller.isloadingCurrentLocation.value
-                              ? 'Loading location'
-                              : controller.currentLocation.value,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 20),
-                        ),
-                      ),
-                    )
-                  ],
+                const Icon(IconlyBold.location),
+                const SizedBox(width: 5), // Optional spacing between icon and text
+                SizedBox(
+                  width: context.width * 0.7,
+                  child: Obx(() => Text(
+                    controller.isloadingCurrentLocation.value
+                        ? 'Updating location'
+                        : controller.currentLocation.value,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                  )),
                 ),
               ],
-            )),
+            ),
+          ],
+        )),
+
       ],
     );
   }

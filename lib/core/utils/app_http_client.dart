@@ -39,7 +39,8 @@ class AppHTTPClient {
           );
       return _processResponse(response, endpoint);
     } on SocketException catch (_) {
-      throw FetchDataException('Connection problem. Please check your internet', uri.toString());
+      throw FetchDataException(
+          'Connection problem. Please check your internet', uri.toString());
     } on TimeoutException catch (_) {
       throw ApiNotRespondingException('Request Timeout', uri.toString());
     }
@@ -62,15 +63,14 @@ class AppHTTPClient {
           .where((MapEntry<String, dynamic> entry) => entry.value != null)
           .fold<Map<String, dynamic>>(
         <String, dynamic>{},
-            (Map<String, dynamic> map, MapEntry<String, dynamic> entry) =>
-        map..[entry.key] = entry.value,
+        (Map<String, dynamic> map, MapEntry<String, dynamic> entry) =>
+            map..[entry.key] = entry.value,
       );
-
 
       final http.Response response =
           await _client.post(uri, body: jsonEncode(filteredBody));
       return _processResponse(response, endpoint);
-    } on SocketException  {
+    } on SocketException {
       throw FetchDataException('Connection problem ', uri.toString());
     } on TimeoutException {
       throw ApiNotRespondingException('Request Timeout', uri.toString());
@@ -123,7 +123,6 @@ class AppHTTPClient {
 
   Map<String, dynamic> _processResponse(
       http.Response response, String endpoint) {
-
     if (response.statusCode != 200 && response.statusCode != 201) {
       AppLog.i(
           '============================ ERROR THROWN ========================');
@@ -157,23 +156,27 @@ class AppHTTPClient {
         }
         return data;
       case 400:
+        final dynamic errorJson = jsonDecode(utf8.decode(response.bodyBytes));
         throw BadRequestException(
-          utf8.decode(response.bodyBytes),
+          errorJson['message'],
           response.request!.url.toString(),
         );
       case 401:
+        final dynamic errorJson = jsonDecode(utf8.decode(response.bodyBytes));
         throw UnauthorizedException(
-          utf8.decode(response.bodyBytes),
+          errorJson['message'],
           response.request!.url.toString(),
         );
       case 403:
+        final dynamic errorJson = jsonDecode(utf8.decode(response.bodyBytes));
         throw UnauthorizedException(
-          utf8.decode(response.bodyBytes),
+          errorJson['message'],
           response.request!.url.toString(),
         );
       case 500:
+        final dynamic errorJson = jsonDecode(utf8.decode(response.bodyBytes));
         throw FetchDataException(
-          utf8.decode(response.bodyBytes),
+          errorJson['message'],
           response.request!.url.toString(),
         );
       default:
@@ -185,7 +188,7 @@ class AppHTTPClient {
   }
 }
 
-class AuthInterceptor extends InterceptorContract  {
+class AuthInterceptor extends InterceptorContract {
   AuthInterceptor({required AuthLocalDataSource authLocalDataSource})
       : _authLocalDataSource = authLocalDataSource;
 
@@ -195,7 +198,8 @@ class AuthInterceptor extends InterceptorContract  {
   FutureOr<BaseRequest> interceptRequest({required BaseRequest request}) async {
     final LoginResponse? response = _authLocalDataSource.authResponse ??
         await _authLocalDataSource.getAuthResponse();
-    final Map<String, String> headers = Map<String, String>.from(request.headers);
+    final Map<String, String> headers =
+        Map<String, String>.from(request.headers);
     final Map<String, String> newHeaders = <String, String>{
       HttpHeaders.contentTypeHeader: 'application/json',
       'Authorization': 'Bearer ${response?.token}'
@@ -205,16 +209,12 @@ class AuthInterceptor extends InterceptorContract  {
     AppLog.i('==================== HEADER SENT IS ==================');
     AppLog.i(headers);
 
-    return request.copyWith(
-      url: request.url,
-      headers: headers
-    );
+    return request.copyWith(url: request.url, headers: headers);
   }
 
   @override
-  FutureOr<BaseResponse> interceptResponse({required BaseResponse response}) async {
+  FutureOr<BaseResponse> interceptResponse(
+      {required BaseResponse response}) async {
     return response;
   }
-
-
 }

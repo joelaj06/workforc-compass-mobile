@@ -211,7 +211,7 @@ class MessageScreen extends GetView<MessageController> {
 
   Widget _buildMessageChatTitle(BuildContext context, Chat chat) {
     final User user = controller.chatController.getRecipient(chat);
-    final String image = user.imageUrl ?? '';
+    final String image = user.imgUrl ?? '';
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[

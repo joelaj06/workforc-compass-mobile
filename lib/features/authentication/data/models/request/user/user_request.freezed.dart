@@ -30,6 +30,7 @@ mixin _$UserRequest {
   String? get phone => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
   String? get confirmPassword => throw _privateConstructorUsedError;
+  @JsonKey(name: 'imgUrl')
   String? get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'job_title')
   String? get jobTitle => throw _privateConstructorUsedError;
@@ -61,7 +62,7 @@ abstract class $UserRequestCopyWith<$Res> {
       String? phone,
       String? password,
       String? confirmPassword,
-      String? image,
+      @JsonKey(name: 'imgUrl') String? image,
       @JsonKey(name: 'job_title') String? jobTitle,
       @JsonKey(name: 'job_description') String? jobDescription,
       String? company,
@@ -175,7 +176,7 @@ abstract class _$$UserRequestImplCopyWith<$Res>
       String? phone,
       String? password,
       String? confirmPassword,
-      String? image,
+      @JsonKey(name: 'imgUrl') String? image,
       @JsonKey(name: 'job_title') String? jobTitle,
       @JsonKey(name: 'job_description') String? jobDescription,
       String? company,
@@ -282,7 +283,7 @@ class _$UserRequestImpl extends _UserRequest {
       this.phone,
       this.password,
       this.confirmPassword,
-      this.image,
+      @JsonKey(name: 'imgUrl') this.image,
       @JsonKey(name: 'job_title') this.jobTitle,
       @JsonKey(name: 'job_description') this.jobDescription,
       this.company,
@@ -313,6 +314,7 @@ class _$UserRequestImpl extends _UserRequest {
   @override
   final String? confirmPassword;
   @override
+  @JsonKey(name: 'imgUrl')
   final String? image;
   @override
   @JsonKey(name: 'job_title')
@@ -411,7 +413,7 @@ abstract class _UserRequest extends UserRequest {
       final String? phone,
       final String? password,
       final String? confirmPassword,
-      final String? image,
+      @JsonKey(name: 'imgUrl') final String? image,
       @JsonKey(name: 'job_title') final String? jobTitle,
       @JsonKey(name: 'job_description') final String? jobDescription,
       final String? company,
@@ -441,6 +443,7 @@ abstract class _UserRequest extends UserRequest {
   @override
   String? get confirmPassword;
   @override
+  @JsonKey(name: 'imgUrl')
   String? get image;
   @override
   @JsonKey(name: 'job_title')

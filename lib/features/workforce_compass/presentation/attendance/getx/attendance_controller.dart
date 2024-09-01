@@ -36,8 +36,8 @@ class AttendanceController extends GetxController {
     'December'
   ];
 
-  RxString startDate = '2022-09-05'.obs;
-  RxString endDate = '2022-09-10'.obs;
+  RxString startDate = ''.obs;
+  RxString endDate = ''.obs;
   RxList<Attendance> attendanceList = <Attendance>[].obs;
   RxInt selectedMonth = DateTime.now().month.obs;
   RxInt selectedYear = DateTime.now().year.obs;
@@ -119,33 +119,5 @@ class AttendanceController extends GetxController {
     return formattedDate;
   }
 
-  String calculateWorkingHours(String checkIn, String checkOut) {
-    if (checkOut.isEmpty) {
-      return '--';
-    }
-    // Parse the check-in and check-out times
-    final TimeOfDay checkInTime = TimeOfDay(
-      hour: int.parse(checkIn.split(':')[0]),
-      minute: int.parse(checkIn.split(':')[1]),
-    );
-    final TimeOfDay checkOutTime = TimeOfDay(
-      hour: int.parse(checkOut.split(':')[0]),
-      minute: int.parse(checkOut.split(':')[1]),
-    );
 
-    // Calculate the difference in minutes
-    final int checkInMinutes = checkInTime.hour * 60 + checkInTime.minute;
-    final int checkOutMinutes = checkOutTime.hour * 60 + checkOutTime.minute;
-    final int differenceInMinutes = checkOutMinutes - checkInMinutes;
-
-    // Convert the difference to hours and minutes
-    final int hours = differenceInMinutes ~/ 60;
-    final int minutes = differenceInMinutes % 60;
-
-    // Format the result
-    final String formattedResult =
-        '${hours.toString().padLeft(2, '0')}hrs ${minutes.toString().padLeft(2, '0')}mins';
-
-    return formattedResult;
-  }
 }
