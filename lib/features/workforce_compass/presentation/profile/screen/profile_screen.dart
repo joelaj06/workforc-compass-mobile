@@ -36,20 +36,18 @@ class ProfileScreen extends GetView<ProfileController> {
             fontSize: 18,
           ),
         ),
-        body: AppLoadingBox(
-          loading: controller.isLoading.value,
-          child: SingleChildScrollView(
-           // physics: const BouncingScrollPhysics(),
-            child:  FutureBuilder<void>(
-                future: controller.getUser(),
-                builder: (BuildContext context, _) {
-                  return Padding(
-                    padding: AppPaddings.mA,
-                    child: Obx(
-                          () => _buildPersonalProfilePage(context, controller.user.value),
-                    ),
-                  );
-                }),
+        body: Obx(() => AppLoadingBox(
+            loading: controller.isLoading.value,
+            child: SingleChildScrollView(
+             // physics: const BouncingScrollPhysics(),
+              child: Padding(
+                      padding: AppPaddings.mA,
+                      child: Obx(
+                            () => _buildPersonalProfilePage(context, controller.user.value),
+                      ),
+                    )
+
+            ),
           ),
         ));
   }

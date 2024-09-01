@@ -66,32 +66,36 @@ class ProfileController extends GetxController {
   }
 
   void updateTheUser() async {
+    isLoading(true);
     final UserRequest userRequest = UserRequest(
       id: user.value.id,
       image: userProfileImage.value.isEmpty
           ? currentProfileImage.value
           : userProfileImage.value,
-      firstName: firstName.value.isEmpty ? null : firstName.value,
-      lastName: lastName.value.isEmpty ? null : lastName.value,
-      email: email.value.isEmpty ? null : email.value,
-      phone: phone.value.isEmpty ? null : phone.value,
-      address: address.value.isEmpty ? null : address.value,
-      jobTitle: jobTitle.value.isEmpty ? null : jobTitle.value,
+      firstName: firstName.value.isEmpty ? user.value.firstName : firstName.value,
+      lastName: lastName.value.isEmpty ? user.value.lastName : lastName.value,
+      email: email.value.isEmpty ? user.value.email : email.value,
+      phone: phone.value.isEmpty ? user.value.phone : phone.value,
+      address: address.value.isEmpty ? user.value.address : address.value,
+      jobTitle: jobTitle.value.isEmpty ? user.value.jobTitle : jobTitle.value,
 
     );
 
     final Either<Failure, User> failureOrUser = await updateUser(userRequest);
     failureOrUser.fold(
           (Failure failure) {
+            isLoading(false);
         AppSnack.show(title: '', message: failure.message, status: SnackStatus.error);
       },
           (User userRes) {
+        isLoading(false);
        AppSnack.show(title: '', message: 'User profile updated successfully',status: SnackStatus.success);
       },
     );
   }
 
   Future<void> getUser() async {
+    isLoading(true);
     final LoginResponse? response = _authLocalDataSource.authResponse ??
         await _authLocalDataSource.getAuthResponse();
     final Either<Failure, User> failureOrUser =
