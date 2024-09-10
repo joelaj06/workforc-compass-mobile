@@ -52,6 +52,15 @@ extension EnvironmentX on Environment {
     }[this]!;
   }
 
+
+
+  String get socketUrl {
+    return <Environment, String>{
+      Environment.development: socketUrlLocal,
+      Environment.production: socketUrlLive,
+    }[this]!;
+  }
+
   String get url {
     return <Environment, String>{
       Environment.development: baseUrlLocal,

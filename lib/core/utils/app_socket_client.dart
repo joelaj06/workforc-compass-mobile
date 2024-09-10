@@ -8,7 +8,6 @@ class AppSocketClient {
 
   /// onSocketConnected: Callback when the socket connection is successfully established
   /// You can perform actions when the connection is established, like joining a chat room.
-  ///
   ///onSocketDisconnected: Callback when the socket is disconnected
   ///You can handle reconnection attempts or display an error message.
   IO.Socket init({
@@ -16,7 +15,7 @@ class AppSocketClient {
     required Function(IO.Socket) onSocketDisconnected,
   }) {
     socket = IO.io(
-        socketUrlLocal,
+        socketUrlLive,
         IO.OptionBuilder()
             .setTransports(<String>['websocket']) // for Flutter or Dart VM
             .disableAutoConnect() // disable auto-connection

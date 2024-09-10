@@ -22,7 +22,7 @@ class AppHTTPClient {
       ]);
 
   static const int requestTimeout = 30;
-  static String baseUrl = environment.url;
+ // static String baseUrl = baseUrl;// environment.url;
 
   //GET
   Future<Map<String, dynamic>> get(String endpoint) async {

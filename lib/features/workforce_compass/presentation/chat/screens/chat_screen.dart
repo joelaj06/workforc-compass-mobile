@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 import '../../../../../core/presentation/utils/app_assets.dart';
 import '../../../../../core/presentation/utils/app_spacing.dart';
@@ -31,10 +31,10 @@ class ChatScreen extends GetView<ChatController> {
         return controller.getUserChats(1);
       },
       child: Obx(
-            () => ListView.builder(
+        () => ListView.builder(
             itemCount: controller.chats.length,
             itemBuilder: (BuildContext context, int index) {
-              return _buildChatCard(context, controller.chats[index],index);
+              return _buildChatCard(context, controller.chats[index], index);
             }),
       ),
     );
@@ -45,7 +45,7 @@ class ChatScreen extends GetView<ChatController> {
     final String image = user.imgUrl ?? '';
     return GestureDetector(
       onTap: () {
-        controller.navigateToMessages(chat,index);
+        controller.navigateToMessages(chat, index);
       },
       child: Container(
         color: Colors.transparent,
@@ -64,12 +64,23 @@ class ChatScreen extends GetView<ChatController> {
                         child: CircleAvatar(
                           child: image.isEmpty
                               ? Image.asset(AppImageAssets.blankProfilePicture)
-                              : Image.memory(
-                            fit: BoxFit.cover,
-                            Base64Convertor().base64toImage(
-                              image,
-                            ),
-                          ),
+                              : image.contains('http')
+                                  ? CachedNetworkImage(
+                                      imageUrl: image,
+                                      placeholder:
+                                          (BuildContext context, String url) =>
+                                              Image.asset(AppImageAssets
+                                                  .blankProfilePicture),
+                                      errorWidget: (BuildContext context,
+                                              String url, dynamic error) =>
+                                          const Icon(Icons.error),
+                                    )
+                                  : Image.memory(
+                                      fit: BoxFit.cover,
+                                      Base64Convertor().base64toImage(
+                                        image,
+                                      ),
+                                    ),
                         ),
                       ),
                       const AppSpacing(
@@ -85,15 +96,18 @@ class ChatScreen extends GetView<ChatController> {
                             ),
                           ),
                           Obx(
-                                () => Text(
-                              controller.getUserNotifications(chat).value.isEmpty
+                            () => Text(
+                              controller
+                                      .getUserNotifications(chat)
+                                      .value
+                                      .isEmpty
                                   ? chat.lastMessage ?? ''
                                   : controller
-                                  .getUserNotifications(chat)
-                                  .value
-                                  .first
-                                  .message
-                                  .text,
+                                      .getUserNotifications(chat)
+                                      .value
+                                      .first
+                                      .message
+                                      .text,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -105,40 +119,43 @@ class ChatScreen extends GetView<ChatController> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
                       Obx(
-                            () => Text(
+                        () => Text(
                           controller.getUserNotifications(chat).value.isEmpty
                               ? ''
                               : DataFormatter.getVerboseDateTimeRepresentation(
-                            DateTime.parse(controller
-                                .getUserNotifications(chat)
-                                .value
-                                .first
-                                .date ??
-                                DateTime.now().toIso8601String()),
-                          ),
+                                  DateTime.parse(controller
+                                          .getUserNotifications(chat)
+                                          .value
+                                          .first
+                                          .date ??
+                                      DateTime.now().toIso8601String()),
+                                ),
                           style: const TextStyle(
                             fontSize: 12,
                           ),
                         ),
                       ),
-                      Obx(() => controller.getUserNotifications(chat).value.isEmpty?
-                      const SizedBox.shrink() :CircleAvatar(
-                        radius: 10,
-                        child: Obx(
-                              () => Text(
-                            controller
-                                .getUserNotifications(chat)
-                                .value
-                                .length
-                                .toString(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
+                      Obx(
+                        () =>
+                            controller.getUserNotifications(chat).value.isEmpty
+                                ? const SizedBox.shrink()
+                                : CircleAvatar(
+                                    radius: 10,
+                                    child: Obx(
+                                      () => Text(
+                                        controller
+                                            .getUserNotifications(chat)
+                                            .value
+                                            .length
+                                            .toString(),
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                       )
                     ],
                   )

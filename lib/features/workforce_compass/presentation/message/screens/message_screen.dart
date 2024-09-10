@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +8,7 @@ import '../../../../../core/presentation/theme/hint_color.dart';
 import '../../../../../core/presentation/theme/primary_color.dart';
 import '../../../../../core/presentation/utils/app_assets.dart';
 import '../../../../../core/presentation/utils/app_spacing.dart';
+import '../../../../../core/utils/base_64.dart';
 import '../../../../../core/utils/data_formatter.dart';
 import '../../../../authentication/data/models/response/user/user_model.dart';
 import '../../../data/models/response/chat/chat_model.dart';
@@ -220,14 +220,21 @@ class MessageScreen extends GetView<MessageController> {
           child: CircleAvatar(
             child: image.isEmpty
                 ? Image.asset(AppImageAssets.blankProfilePicture)
-                : CachedNetworkImage(
-                    imageUrl: image,
-                    placeholder: (BuildContext context, String url) =>
-                        Image.asset(AppImageAssets.blankProfilePicture),
-                    errorWidget:
-                        (BuildContext context, String url, dynamic error) =>
-                            const Icon(Icons.error),
-                  ),
+                : image.contains('http')
+                    ? CachedNetworkImage(
+                        imageUrl: image,
+                        placeholder: (BuildContext context, String url) =>
+                            Image.asset(AppImageAssets.blankProfilePicture),
+                        errorWidget:
+                            (BuildContext context, String url, dynamic error) =>
+                                const Icon(Icons.error),
+                      )
+                    : Image.memory(
+                        fit: BoxFit.cover,
+                        Base64Convertor().base64toImage(
+                          image,
+                        ),
+                      ),
           ),
         ),
         const AppSpacing(
