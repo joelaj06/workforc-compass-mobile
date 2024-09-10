@@ -58,7 +58,8 @@ class ProfileController extends GetxController {
       },
           (MessageResponse response) {
         isLoading(false);
-        AppSnack.show(title: '', message: 'User successfully logged out');
+        AppSnack.show(title: '', message: 'User successfully logged out',
+        status: SnackStatus.success);
 
         Get.toNamed<dynamic>(AppRoutes.login);
       },

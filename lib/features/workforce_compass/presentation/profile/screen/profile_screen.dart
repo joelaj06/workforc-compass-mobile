@@ -26,6 +26,15 @@ class ProfileScreen extends GetView<ProfileController> {
         appBar: AppBar(
           title: const Text('Edit Profile'),
           automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                controller.userLogout();
+              },
+              icon: const Icon(IconlyBold.logout,
+              color: Colors.red),
+            ),
+          ],
         ),
 
         bottomNavigationBar: SizedBox(

@@ -20,7 +20,7 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-      controller.getCurrentLocation();
+    controller.getCurrentLocation();
     //controller.getUserTasks();
     return Scaffold(
       body: SingleChildScrollView(
@@ -225,72 +225,92 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Padding _buildPendingWorkCard(BuildContext context, Task task) {
-    return Padding(
-      padding: AppPaddings.sA,
-      child: Container(
-        height: 80,
+  Widget _buildPendingWorkCard(BuildContext context, Task task) {
+    return SizedBox(
+      width: 200,
+      child: Padding(
         padding: AppPaddings.sA,
-        decoration: BoxDecoration(
+        child: Container(
+          height: 80,
+          padding: AppPaddings.sA,
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: context.colors.primary, width: 2)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                AppImageAssets.task,
-                width: 180,
-              ),
-            ),
-            Text(
-              task.title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Row(
-              children: <Widget>[
-                Icon(
-                  IconlyLight.calendar,
-                  color: context.colors.primary.shade900,
-                ),
-                Text(DataFormatter.formatDateToString(task.startDate ?? '')),
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                onTap: () {
-                  controller.navigateToTaskScreen(task);
-                },
-                child: SizedBox(
+            border: Border.all(color: context.colors.primary, width: 2),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  AppImageAssets.task,
                   width: 180,
-                  child: Container(
-                    padding: AppPaddings.sA.add(AppPaddings.sH),
-                    decoration: BoxDecoration(
+                ),
+              ),
+              Flexible(
+                child: Text(
+                  task.title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    IconlyLight.calendar,
+                    color: context.colors.primary.shade900,
+                  ),
+                  const SizedBox(width: 4), // Add a small space between the icon and text
+                  Flexible(
+                    child: Text(
+                      DataFormatter.formatDateToString(task.startDate ?? ''),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: GestureDetector(
+                  onTap: () {
+                    controller.navigateToTaskScreen(task);
+                  },
+                  child: SizedBox(
+                    width: 180,
+                    child: Container(
+                      padding: AppPaddings.sA.add(AppPaddings.sH),
+                      decoration: BoxDecoration(
                         color: context.colors.primary,
                         borderRadius: BorderRadius.circular(50),
                         border: Border.all(
-                            color: context.colors.primary, width: 2)),
-                    child: const Text(
-                      'View',
-                      style: TextStyle(
-                        color: Colors.white,
+                          color: context.colors.primary,
+                          width: 2,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
+                      child: const Text(
+                        'View',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
 
   Row _buildProfile(BuildContext context) {
     return Row(
@@ -316,40 +336,41 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
         Obx(() => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              '${controller.user.value.firstName} ${controller.user.value.lastName ?? ''}',
-              style: const TextStyle(color: Colors.white, fontSize: 18),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,  // Adjusted to start
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Icon(IconlyBold.location),
-                const SizedBox(width: 5), // Optional spacing between icon and text
-                SizedBox(
-                  width: context.width * 0.7,
-                  child: Obx(() => Text(
-                    controller.isloadingCurrentLocation.value
-                        ? 'Updating location'
-                        : controller.currentLocation.value,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
+                Text(
+                  '${controller.user.value.firstName} ${controller.user.value.lastName ?? ''}',
+                  style: const TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  // Adjusted to start
+                  children: <Widget>[
+                    const Icon(IconlyBold.location),
+                    const SizedBox(width: 5),
+                    // Optional spacing between icon and text
+                    SizedBox(
+                      width: context.width * 0.7,
+                      child: Obx(() => Text(
+                            controller.isloadingCurrentLocation.value
+                                ? 'Updating location'
+                                : controller.currentLocation.value,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                            ),
+                          )),
                     ),
-                  )),
+                  ],
                 ),
               ],
-            ),
-          ],
-        )),
-
+            )),
       ],
     );
   }

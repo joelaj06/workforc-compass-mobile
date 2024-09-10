@@ -39,6 +39,8 @@ void main() async {
 
 
   final String? token = await FirebaseMessaging.instance.getToken();
+  print('==================token================');
+  print(token);
 
   //This function will be called if notification is opened when app is
   // running in background
