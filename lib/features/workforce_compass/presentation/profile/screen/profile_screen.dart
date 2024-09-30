@@ -26,7 +26,7 @@ class ProfileScreen extends GetView<ProfileController> {
         appBar: AppBar(
           title: const Text('Edit Profile'),
           automaticallyImplyLeading: false,
-          actions: [
+          actions: <Widget>[
             IconButton(
               onPressed: () {
                 controller.userLogout();

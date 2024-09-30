@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:work_compass/features/authentication/data/models/request/password_reset/password_reset_request.dart';
 
 import '../../../../core/errors/failure.dart';
 
@@ -24,36 +25,37 @@ class AuthRepositoryImpl extends Repository implements AuthRepository {
   @override
   Future<Either<Failure, User>> login(LoginRequest request) async {
     final Either<Failure, LoginResponse> response =
-    await makeRequest(authRemoteDataSource.login(request));
+        await makeRequest(authRemoteDataSource.login(request));
 
     return response.fold((Failure failure) {
       return left(failure);
-    },
-            (LoginResponse response) async {
-          await authLocalDataSource.persistAuthResponse(response);
-          final User user = User(id: response.id,
-              firstName: response.firstName,
-              lastName: response.lastName ?? '',
-              email: response.email ?? '',
-              isAgent: false);
-          return right(user);
-        });
+    }, (LoginResponse response) async {
+      await authLocalDataSource.persistAuthResponse(response);
+      final User user = User(
+          id: response.id,
+          firstName: response.firstName,
+          lastName: response.lastName ?? '',
+          email: response.email ?? '',
+          isAgent: false);
+      return right(user);
+    });
   }
 
   @override
   Future<Either<Failure, User>> loadUser() async {
     final Either<Failure, LoginResponse> response =
-    await makeLocalRequest(authLocalDataSource.getAuthResponse);
+        await makeLocalRequest(authLocalDataSource.getAuthResponse);
     return response.fold((Failure failure) => left(failure),
-            (LoginResponse response) async {
-          await authLocalDataSource.persistAuthResponse(response);
-          final User user = User(id: response.id,
-              firstName: response.firstName,
-              lastName: response.lastName ?? '',
-              email: response.email ?? '',
-              isAgent: false);
-          return right(user);
-        });
+        (LoginResponse response) async {
+      await authLocalDataSource.persistAuthResponse(response);
+      final User user = User(
+          id: response.id,
+          firstName: response.firstName,
+          lastName: response.lastName ?? '',
+          email: response.email ?? '',
+          isAgent: false);
+      return right(user);
+    });
   }
 
   @override
@@ -99,10 +101,10 @@ class AuthRepositoryImpl extends Repository implements AuthRepository {
   @override
   Future<Either<Failure, MessageResponse>> logout() async {
     final Either<Failure, MessageResponse> response =
-    await makeRequest(authRemoteDataSource.logout());
+        await makeRequest(authRemoteDataSource.logout());
     return response.fold(
-          (Failure failure) => left(failure),
-          (MessageResponse response) async {
+      (Failure failure) => left(failure),
+      (MessageResponse response) async {
         await authLocalDataSource.deleteAuthResponse();
         return right(response);
       },
@@ -112,5 +114,12 @@ class AuthRepositoryImpl extends Repository implements AuthRepository {
   @override
   Future<Either<Failure, User>> addUser({required UserRequest userRequest}) {
     return makeRequest(authRemoteDataSource.addUser(userRequest: userRequest));
+  }
+
+  @override
+  Future<Either<Failure, MessageResponse>> passwordReset(
+      {required PasswordResetRequest resetRequest}) {
+    return makeRequest(
+        authRemoteDataSource.passwordReset(resetRequest: resetRequest));
   }
 }

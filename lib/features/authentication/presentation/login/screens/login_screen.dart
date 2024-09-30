@@ -1,5 +1,8 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_compass/core/presentation/theme/app_theme.dart';
 
 import '../../../../../core/presentation/utils/app_spacing.dart';
 import '../../../../../core/presentation/widgets/animated_column.dart';
@@ -28,18 +31,22 @@ class LoginScreen extends GetView<LoginController> {
           ),
         ),
       ),
-      bottomNavigationBar: SizedBox(
+      bottomNavigationBar:  SizedBox(
           height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Text("Don't have an account?"),
-              TextButton(
+              const Text('Use this password to login as a new user: '),
+              Text('defaultUser', style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: context.colors.secondary
+              ),),
+            /*  TextButton(
                 onPressed: () {
                   controller.navigateToSignUpScreen();
                 },
                 child: const Text('Register'),
-              )
+              )*/
             ],
           )),
     );

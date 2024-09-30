@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 
 //mb - 192.168.108.217
-const String ip =  '192.168.8.197';
+const String ip =  '192.168.100.12';
 const String socketUrlLocal = kIsWeb ? 'http://localhost:3000/':'http://$ip:3000/';
 const String socketUrlLive = 'https://rollkall.onrender.com';
 const String baseUrlLocal = kIsWeb ? 'http://localhost:3000/api/':'http://$ip:3000/api/';
-const String baseUrl = 'https://rollkall.onrender.com/api/';
+const String baseUrl = 'http://$ip:3000/api/';// 'https://rollkall.onrender.com/api/';
 enum Environment { development, production }
 
 bool isTesting = kIsWeb? false:Platform.environment.containsKey('FLUTTER_TEST');
